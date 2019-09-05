@@ -17,31 +17,20 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
-        try{
-            Response response = (Response) t;
-            if (response.getCode() == 0) {
-                onSuccess(t);
-            } else {
-                ServerException exception = new ServerException(response.getCode(), response.getErrMsg());
-                onError(exception);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            onError(e);
-        }
+        onSuccess(t);
     }
 
     @Override
     public void onError(Throwable e) {
         if (e instanceof ApiException) {
-            onError((ApiException)e);
+            onError((ApiException) e);
         } else {
+            e.printStackTrace();
             ApiException exception = new ApiException(e, ERROR.UNKNOWN);
             exception.setMessage(e.getMessage());
             onError(exception);
         }
     }
-
 
 
     protected abstract void onSuccess(T t);

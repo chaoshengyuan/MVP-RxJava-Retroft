@@ -5,26 +5,26 @@ package com.wenbing.mvpdemo.bean.base;
  * @date 2019/9/3 15:47
  */
 public class Response<T> {
-    private T body;
+    private T data;
 
-    private int code;
+    private int result;
 
     private String errMsg;
 
-    public T getBody() {
-        return body;
+    public T getData() {
+        return data;
     }
 
-    public void setBody(T body) {
-        this.body = body;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public int getCode() {
-        return code;
+    public int getResult() {
+        return result;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setResult(int result) {
+        this.result = result;
     }
 
     public String getErrMsg() {

@@ -2,6 +2,10 @@ package com.wenbing.mvpdemo.retrofit;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.wenbing.mvpdemo.Utils.LogUtil;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -13,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,15 +31,17 @@ class RetrofitFactory {
 
     private static final String TAG = "ApiRetrofit";
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "https://mockapi.eolinker.com/p6QCAEw5a26610182ff15ddc6f4f212776fdfbb3ce18328/";
 
     private Retrofit mRetrofit;
-
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
     RetrofitFactory() {
         mRetrofit = new Retrofit
                 .Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(getClient())
@@ -42,11 +49,19 @@ class RetrofitFactory {
     }
 
     private static OkHttpClient getClient() {
+        LogUtil.setLevel(LogUtil.DEBUG);
         return new OkHttpClient
                 .Builder()
-                .addInterceptor(getInterceptor())
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(new CommonInterceptor())
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15,TimeUnit.SECONDS)
+                .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        LogUtil.i(message);
+                    }
+                }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
     }
 
@@ -69,6 +84,7 @@ class RetrofitFactory {
                 Log.e(TAG, "| " + request.toString() + request.headers().toString());
                 Log.e(TAG, "| Response:" + content);
                 Log.e(TAG, "----------Request End:" + duration + "毫秒----------");
+
                 return response.newBuilder()
                         .body(ResponseBody.create(mediaType, content))
                         .build();

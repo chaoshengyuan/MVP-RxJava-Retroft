@@ -81,6 +81,7 @@ public class ExceptionEngine {
             return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN);
+            e.printStackTrace();
             ex.setMessage("未知错误");          //未知错误
             return ex;
         }

@@ -12,7 +12,7 @@ import com.wenbing.mvpdemo.mvp.view.BaseMvpActivity;
 import com.wenbing.mvpdemo.mvp.factory.CreatePresenter;
 
 @CreatePresenter(TestPresenter.class)
-public class MainActivity extends BaseMvpActivity<TestView, TestPresenter> implements TestView{
+public class MainActivity extends BaseMvpActivity<TestView, TestPresenter> implements TestView {
 
     TextView textView;
     Button btnSuccess;
@@ -34,7 +34,7 @@ public class MainActivity extends BaseMvpActivity<TestView, TestPresenter> imple
         btnSuccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getMvpPresenter().requestData(200);
+                getMvpPresenter().requestData();
             }
         });
     }
@@ -43,7 +43,7 @@ public class MainActivity extends BaseMvpActivity<TestView, TestPresenter> imple
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("testxxx","testxxx_save");
+        outState.putString("testxxx", "testxxx_save");
     }
 
     @Override
@@ -55,10 +55,9 @@ public class MainActivity extends BaseMvpActivity<TestView, TestPresenter> imple
     }
 
     @Override
-    public void setData(LoginResponse loginResponse) {
-
+    public void setData(LoginResponse response) {
+        textView.setText(response.getUserName());
     }
-
 
 
     @Override

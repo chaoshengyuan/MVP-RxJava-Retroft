@@ -1,22 +1,15 @@
 package com.wenbing.mvpdemo.retrofit;
 
-import android.os.Handler;
-
 import com.wenbing.mvpdemo.Utils.RxUtil;
 import com.wenbing.mvpdemo.bean.LoginResponse;
 import com.wenbing.mvpdemo.bean.base.Request;
 import com.wenbing.mvpdemo.bean.base.Response;
-import com.wenbing.mvpdemo.mvp.ICallback;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 import com.wenbing.mvpdemo.retrofit.error.ExceptionEngine;
 import com.wenbing.mvpdemo.retrofit.error.ServerException;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author gs_wenbing
@@ -49,12 +42,12 @@ public class ApiServer {
         @Override
         public T apply(Response<T> response) {
             //对返回码进行判断，如果不是true，则证明服务器端返回错误信息了，便根据跟服务器约定好的错误码去解析异常
-            if (response.getCode() != 0) {
+            if (response.getResult() != 0) {
                 //如果服务器端有错误信息返回，那么抛出异常，让下面的方法去捕获异常做统一处理
-                throw new ServerException(response.getCode(), response.getErrMsg());
+                throw new ServerException(response.getResult(), response.getErrMsg());
             }
             //服务器请求数据成功，返回里面的数据实体
-            return response.getBody();
+            return response.getData();
         }
     }
 
@@ -67,10 +60,10 @@ public class ApiServer {
     }
 
     public Observable<LoginResponse> login(Request<String> request) {
-        return mInterface.login("", request)
+        return mInterface.login(URLContants.LOGIN)
                 .map(new ServerResultFunc<LoginResponse>())
-                .onErrorResumeNext(new ExceptionFunc<LoginResponse>())
-                .compose(RxUtil.<LoginResponse>background());
+                .onErrorResumeNext(new ExceptionFunc<LoginResponse>());
+//                .compose(RxUtil.<LoginResponse>background());
     }
 
 }

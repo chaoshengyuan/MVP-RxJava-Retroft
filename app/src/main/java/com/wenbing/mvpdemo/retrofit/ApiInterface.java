@@ -5,9 +5,7 @@ import com.wenbing.mvpdemo.bean.base.Request;
 import com.wenbing.mvpdemo.bean.base.Response;
 
 import io.reactivex.Observable;
-import retrofit2.http.Body;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
 import retrofit2.http.Url;
 
 /**
@@ -16,7 +14,6 @@ import retrofit2.http.Url;
  */
 interface ApiInterface {
 
-    @Headers({"Content-Type: application/json","Accept: application/json"})
-    @POST
-    Observable<Response<LoginResponse>> login(@Url String url, @Body Request body);
+    @GET
+    Observable<Response<LoginResponse>> login(@Url String url);
 }

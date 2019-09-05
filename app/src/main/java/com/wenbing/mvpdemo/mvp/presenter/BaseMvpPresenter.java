@@ -3,6 +3,7 @@ package com.wenbing.mvpdemo.mvp.presenter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.wenbing.mvpdemo.Utils.RxUtil;
 import com.wenbing.mvpdemo.mvp.view.BaseMvpView;
 import com.wenbing.mvpdemo.retrofit.ApiServer;
 import com.wenbing.mvpdemo.retrofit.BaseObserver;
@@ -57,8 +58,7 @@ public abstract class BaseMvpPresenter<V extends BaseMvpView> {
         }
         if (!mDisposable.isDisposed()) {
             mDisposable.add(observable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(RxUtil.background())
                     .subscribeWith(observer));
         }
     }

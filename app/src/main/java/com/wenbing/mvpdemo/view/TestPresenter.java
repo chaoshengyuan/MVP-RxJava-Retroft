@@ -15,12 +15,12 @@ import com.wenbing.mvpdemo.retrofit.error.ApiException;
  */
 public class TestPresenter extends BaseMvpPresenter<TestView> {
 
-    void requestData(int type) {
+    void requestData() {
         if(!isAttached()){
             return;
         }
         getMvpView().showLoading();
-        getMvpView().setBtnEnabled(false);
+//        getMvpView().setBtnEnabled(false);
         Request<String> request = new Request<>();
         addDisposable(mApiServer.login(request), new BaseObserver<LoginResponse>() {
             @Override

@@ -27,7 +27,7 @@ public class TestPresenter extends BaseMvpPresenter<TestView> {
         login.setUserNo("zhangke");
         login.setPassword("123456");
         request.setParam(login);
-        addDisposable2(mApiServer.login(request,new BaseObserver<LoginResponse>() {
+        addDisposable(mApiServer.login(request,new BaseObserver<LoginResponse>() {
             @Override
             protected void onSuccess(LoginResponse loginResponse) {
                 getMvpView().setData(loginResponse);
@@ -63,6 +63,6 @@ public class TestPresenter extends BaseMvpPresenter<TestView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        removeDisposable();
+
     }
 }

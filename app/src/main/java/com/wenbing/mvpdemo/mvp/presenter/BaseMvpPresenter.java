@@ -33,7 +33,7 @@ public abstract class BaseMvpPresenter<V extends BaseMvpView> {
     }
 
     public void onDestroy() {
-
+        removeDisposable();
     }
 
     public void onSaveInstanceState(Bundle outState) {
@@ -48,7 +48,7 @@ public abstract class BaseMvpPresenter<V extends BaseMvpView> {
         return mView;
     }
 
-    protected void addDisposable2(Disposable disposable) {
+    protected void addDisposable(Disposable disposable) {
         if (mDisposable == null) {
             mDisposable = new CompositeDisposable();
         }

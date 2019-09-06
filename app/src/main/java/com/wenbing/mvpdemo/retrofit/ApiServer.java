@@ -61,12 +61,17 @@ public class ApiServer {
         }
     }
 
-    public DisposableObserver<LoginResponse> login(Request<LoginRequest> Request,DisposableObserver<LoginResponse> observer) {
-        return mInterface.login(URLContants.LOGIN,Request)
-                .map(new ServerResultFunc<LoginResponse>())
-                .onErrorResumeNext(new ExceptionFunc<LoginResponse>())
-                .compose(RxUtil.<LoginResponse>background())
+    private<T> DisposableObserver<T> toSubscribe(Observable<Response<T>> sourse, DisposableObserver<T> observer) {
+        return sourse.map(new ServerResultFunc<T>())
+                .onErrorResumeNext(new ExceptionFunc<T>())
+                .compose(RxUtil.<T>background())
                 .subscribeWith(observer);
     }
+
+    public DisposableObserver<LoginResponse> login(Request<LoginRequest> Request,DisposableObserver<LoginResponse> observer) {
+        Observable<Response<LoginResponse>> login = mInterface.login(URLContants.LOGIN, Request);
+        return toSubscribe(login,observer);
+    }
+
 
 }

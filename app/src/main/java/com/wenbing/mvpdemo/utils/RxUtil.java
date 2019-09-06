@@ -1,4 +1,4 @@
-package com.wenbing.mvpdemo.Utils;
+package com.wenbing.mvpdemo.utils;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;

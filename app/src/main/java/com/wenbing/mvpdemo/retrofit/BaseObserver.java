@@ -4,7 +4,6 @@ import com.wenbing.mvpdemo.bean.base.Response;
 import com.wenbing.mvpdemo.mvp.view.BaseMvpView;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 import com.wenbing.mvpdemo.retrofit.error.ERROR;
-import com.wenbing.mvpdemo.retrofit.error.ServerException;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -30,10 +29,15 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
             exception.setMessage(e.getMessage());
             onError(exception);
         }
+        onComplete();
     }
 
+    @Override
+    public void onComplete() {
+    }
 
     protected abstract void onSuccess(T t);
+
 
     /**
      * 错误回调

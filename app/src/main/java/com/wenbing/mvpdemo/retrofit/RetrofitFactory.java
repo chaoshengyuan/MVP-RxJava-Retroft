@@ -1,22 +1,12 @@
 package com.wenbing.mvpdemo.retrofit;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.wenbing.mvpdemo.Utils.LogUtil;
+import com.wenbing.mvpdemo.utils.LogUtil;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -34,10 +24,11 @@ class RetrofitFactory {
     private static final String BASE_URL = "https://mockapi.eolinker.com/p6QCAEw5a26610182ff15ddc6f4f212776fdfbb3ce18328/";
 
     private Retrofit mRetrofit;
-    Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
-    RetrofitFactory() {
+
+    private RetrofitFactory() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         mRetrofit = new Retrofit
                 .Builder()
                 .baseUrl(BASE_URL)
@@ -65,33 +56,6 @@ class RetrofitFactory {
                 .build();
     }
 
-    private static Interceptor getInterceptor() {
-        return new Interceptor() {
-            @NotNull
-            @Override
-            public Response intercept(@NotNull Chain chain) throws IOException {
-                Request request = chain.request();
-                long startTime = System.currentTimeMillis();
-
-                Response response = chain.proceed(chain.request());
-                long endTime = System.currentTimeMillis();
-
-                long duration = endTime - startTime;
-
-                MediaType mediaType = response.body().contentType();
-                String content = response.body().string();
-                Log.e(TAG, "----------Request Start----------------");
-                Log.e(TAG, "| " + request.toString() + request.headers().toString());
-                Log.e(TAG, "| Response:" + content);
-                Log.e(TAG, "----------Request End:" + duration + "毫秒----------");
-
-                return response.newBuilder()
-                        .body(ResponseBody.create(mediaType, content))
-                        .build();
-            }
-        };
-
-    }
     private static class SingletonHolder{
         private static final RetrofitFactory INSTANCE = new RetrofitFactory();
     }

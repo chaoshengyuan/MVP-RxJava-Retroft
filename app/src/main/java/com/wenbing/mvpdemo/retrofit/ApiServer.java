@@ -1,6 +1,7 @@
 package com.wenbing.mvpdemo.retrofit;
 
-import com.wenbing.mvpdemo.Utils.RxUtil;
+import com.wenbing.mvpdemo.utils.RxUtil;
+import com.wenbing.mvpdemo.bean.LoginRequest;
 import com.wenbing.mvpdemo.bean.LoginResponse;
 import com.wenbing.mvpdemo.bean.base.Request;
 import com.wenbing.mvpdemo.bean.base.Response;
@@ -10,6 +11,7 @@ import com.wenbing.mvpdemo.retrofit.error.ServerException;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * @author gs_wenbing
@@ -59,11 +61,12 @@ public class ApiServer {
         }
     }
 
-    public Observable<LoginResponse> login(Request<String> request) {
-        return mInterface.login(URLContants.LOGIN)
+    public DisposableObserver<LoginResponse> login(Request<LoginRequest> Request,DisposableObserver<LoginResponse> observer) {
+        return mInterface.login(URLContants.LOGIN,Request)
                 .map(new ServerResultFunc<LoginResponse>())
-                .onErrorResumeNext(new ExceptionFunc<LoginResponse>());
-//                .compose(RxUtil.<LoginResponse>background());
+                .onErrorResumeNext(new ExceptionFunc<LoginResponse>())
+                .compose(RxUtil.<LoginResponse>background())
+                .subscribeWith(observer);
     }
 
 }

@@ -3,6 +3,7 @@ package com.wenbing.mvpdemo.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.wenbing.mvpdemo.bean.LoginRequest;
 import com.wenbing.mvpdemo.bean.LoginResponse;
 import com.wenbing.mvpdemo.bean.base.Request;
 import com.wenbing.mvpdemo.mvp.presenter.BaseMvpPresenter;
@@ -20,9 +21,13 @@ public class TestPresenter extends BaseMvpPresenter<TestView> {
             return;
         }
         getMvpView().showLoading();
-//        getMvpView().setBtnEnabled(false);
-        Request<String> request = new Request<>();
-        addDisposable(mApiServer.login(request), new BaseObserver<LoginResponse>() {
+        getMvpView().setBtnEnabled(false);
+        Request<LoginRequest> request = new Request<>();
+        LoginRequest login = new LoginRequest();
+        login.setUserNo("zhangke");
+        login.setPassword("123456");
+        request.setParam(login);
+        addDisposable2(mApiServer.login(request,new BaseObserver<LoginResponse>() {
             @Override
             protected void onSuccess(LoginResponse loginResponse) {
                 getMvpView().setData(loginResponse);
@@ -38,7 +43,7 @@ public class TestPresenter extends BaseMvpPresenter<TestView> {
                 getMvpView().setBtnEnabled(true);
                 getMvpView().hideLoading();
             }
-        });
+        }));
     }
 
     @Override
@@ -58,5 +63,6 @@ public class TestPresenter extends BaseMvpPresenter<TestView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        removeDisposable();
     }
 }

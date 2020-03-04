@@ -1,51 +1,45 @@
-package com.wenbing.mvpdemo.mvp.presenter;
+package com.wenbing.mvpdemo.base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
-import com.wenbing.mvpdemo.mvp.view.BaseMvpView;
 import com.wenbing.mvpdemo.retrofit.ApiServer;
+
+import java.lang.ref.SoftReference;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
+ * Presenter 的所有基类
+ *
  * @author gs_wenbing
- * @date 2019/9/3 14:54
+ * @date 2020/3/4 10:16
  */
-public abstract class BaseMvpPresenter<V extends BaseMvpView> {
-    private V mView;
-
+public class BasePresenter<V extends IBaseView> {
+    //用于及时取消订阅，以防止内存泄漏
     private CompositeDisposable mDisposable;
 
     protected ApiServer mApiServer = ApiServer.getInstance();
 
-    public void onCreatePresenter(@Nullable Bundle savedState) {
+    private SoftReference <V> mReferenceView;
 
-    }
-
+    /**
+     * activity 创建的时关联presenter
+     * @param view
+     */
     public void onAttachView(V view) {
-        this.mView = view;
+        this.mReferenceView = new SoftReference<>(view);
     }
 
+    /**
+     * activity 关闭时解除绑定,防止内存泄漏
+     */
     public void onDetachView() {
-        this.mView = null;
-    }
-
-    public void onDestroy() {
+        this.mReferenceView.clear();
+        this.mReferenceView = null;
         removeDisposable();
     }
 
-    public void onSaveInstanceState(Bundle outState) {
-
-    }
-
-    public boolean isAttached() {
-        return this.mView != null;
-    }
-
-    public V getMvpView() {
-        return mView;
+    public V getView() {
+        return this.mReferenceView.get();
     }
 
     protected void addDisposable(Disposable disposable) {
@@ -59,8 +53,7 @@ public abstract class BaseMvpPresenter<V extends BaseMvpView> {
 
     protected void removeDisposable() {
         if (mDisposable != null) {
-            // clear时网络请求会随即cancel
-            mDisposable.clear();
+            mDisposable.dispose();
             mDisposable = null;
         }
     }

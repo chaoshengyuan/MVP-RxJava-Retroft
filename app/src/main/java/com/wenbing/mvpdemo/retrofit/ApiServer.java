@@ -1,13 +1,10 @@
 package com.wenbing.mvpdemo.retrofit;
 
-import com.wenbing.mvpdemo.utils.RxUtil;
-import com.wenbing.mvpdemo.bean.LoginRequest;
-import com.wenbing.mvpdemo.bean.LoginResponse;
-import com.wenbing.mvpdemo.bean.base.Request;
-import com.wenbing.mvpdemo.bean.base.Response;
+import com.wenbing.mvpdemo.beans.base.Response;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 import com.wenbing.mvpdemo.retrofit.error.ExceptionEngine;
 import com.wenbing.mvpdemo.retrofit.error.ServerException;
+import com.wenbing.mvpdemo.utils.RxUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -20,10 +17,10 @@ import io.reactivex.observers.DisposableObserver;
 public class ApiServer {
 
     private static ApiServer apiServer;
-    private ApiInterface mInterface;
+    private ApiInterface.API api;
 
     private ApiServer() {
-        mInterface = RetrofitFactory.getInstance().create(ApiInterface.class);
+        api = RetrofitFactory.getInstance().create(ApiInterface.API.class);
     }
 
     public static ApiServer getInstance() {
@@ -37,6 +34,10 @@ public class ApiServer {
         return apiServer;
     }
 
+    public  ApiInterface.API getApi() {
+        return api;
+    }
+
     /**
      * 拦截固定格式的公共数据类型Response<T>,判断里面的状态码
      */
@@ -44,9 +45,9 @@ public class ApiServer {
         @Override
         public T apply(Response<T> response) {
             //对返回码进行判断，如果不是true，则证明服务器端返回错误信息了，便根据跟服务器约定好的错误码去解析异常
-            if (response.getResult() != 0) {
+            if (response.getErrorCode() != 0) {
                 //如果服务器端有错误信息返回，那么抛出异常，让下面的方法去捕获异常做统一处理
-                throw new ServerException(response.getResult(), response.getErrMsg());
+                throw new ServerException(response.getErrorCode(), response.getErrorMsg());
             }
             //服务器请求数据成功，返回里面的数据实体
             return response.getData();
@@ -61,17 +62,11 @@ public class ApiServer {
         }
     }
 
-    private<T> DisposableObserver<T> toSubscribe(Observable<Response<T>> sourse, DisposableObserver<T> observer) {
+    public<T> DisposableObserver<T> toSubscribe(Observable<Response<T>> sourse, DisposableObserver<T> observer) {
         return sourse.map(new ServerResultFunc<T>())
                 .onErrorResumeNext(new ExceptionFunc<T>())
                 .compose(RxUtil.<T>background())
                 .subscribeWith(observer);
     }
-
-    public DisposableObserver<LoginResponse> login(Request<LoginRequest> Request,DisposableObserver<LoginResponse> observer) {
-        Observable<Response<LoginResponse>> login = mInterface.login(URLContants.LOGIN, Request);
-        return toSubscribe(login,observer);
-    }
-
 
 }

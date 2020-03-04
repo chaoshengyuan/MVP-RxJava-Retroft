@@ -1,4 +1,4 @@
-package com.wenbing.mvpdemo.bean.base;
+package com.wenbing.mvpdemo.beans.base;
 
 /**
  * @author gs_wenbing

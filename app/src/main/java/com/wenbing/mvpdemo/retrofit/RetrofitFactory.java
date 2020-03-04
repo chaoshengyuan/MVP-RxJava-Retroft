@@ -20,8 +20,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 class RetrofitFactory {
 
     private static final String TAG = "ApiRetrofit";
-
-    private static final String BASE_URL = "https://mockapi.eolinker.com/p6QCAEw5a26610182ff15ddc6f4f212776fdfbb3ce18328/";
+    static final String BASE_URL = "https://www.wanandroid.com/";
 
     private Retrofit mRetrofit;
 

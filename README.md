@@ -347,6 +347,11 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
 这样显示整个例子就完成了，效果如下：
 
-<img src="https://github.com/gs-wenbing/MVP-RxJava-Retroft/blob/master/image/Screenshot_20200304_143119_com.wenbing.mvpdemo.jpg" alt="Screenshot_20200304_143114_com.wenbing.mvpdemo" style="zoom:30%;" />
+<img src="https://github.com/gs-wenbing/MVP-RxJava-Retroft/blob/master/image/Screenshot_20200304_143119_com.wenbing.mvpdemo.jpg" alt="Screenshot_20200304_143114_com.wenbing.mvpdemo" width="375" />
 
+### 说明
+
+如果对您有帮助，希望您可以点右上角 "Star" 支持一下 谢谢！ ^^
+
+如有问题请直接在 Issues 中提，谢谢！ ^^
 

@@ -1,24 +1,25 @@
 package com.wenbing.mvpdemo.module;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseActivity;
-import com.wenbing.mvpdemo.beans.Banner;
+import com.wenbing.mvpdemo.base.BaseFragment;
+import com.wenbing.mvpdemo.base.BasePresenter;
+import com.wenbing.mvpdemo.module.home.HomeFragment;
+import com.wenbing.mvpdemo.module.me.MeFragment;
+import com.wenbing.mvpdemo.module.project.ProjectFragment;
+import com.wenbing.mvpdemo.module.tree.TreeFragment;
+import com.wenbing.mvpdemo.widget.bottomtab.TabItem;
+import com.wenbing.mvpdemo.widget.bottomtab.TabLayout;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity<MainPresenter> implements IMainView {
+public class MainActivity extends BaseActivity implements TabLayout.OnTabClickListener {
 
-    TextView textView;
-    Button btnSuccess;
+    private TabLayout mTabLayout;
 
     @Override
-    protected MainPresenter createrPresenter() {
-        return new MainPresenter();
+    protected BasePresenter createrPresenter() {
+        return null;
     }
 
     @Override
@@ -28,22 +29,29 @@ public class MainActivity extends BaseActivity<MainPresenter> implements IMainVi
 
     @Override
     protected void initViews() {
-        textView = findViewById(R.id.textView);
-        btnSuccess = findViewById(R.id.btn_success);
+        mTabLayout = findViewById(R.id.tab_layout);
+        ArrayList<TabItem> tabs = new ArrayList<>();
+        tabs.add(new TabItem(R.drawable.selector_tab_home, R.string.tab_home,0, HomeFragment.class));
+        tabs.add(new TabItem(R.drawable.selector_tab_tree, R.string.tab_tree,1, TreeFragment.class));
+        tabs.add(new TabItem(R.drawable.selector_tab_pro, R.string.tab_project,2, ProjectFragment.class));
+        tabs.add(new TabItem(R.drawable.selector_tab_me, R.string.tab_me,3, MeFragment.class));
+        mTabLayout.initData(tabs, this);
+//        mTabLayout.setCurrentTab(0);
     }
 
     @Override
     protected void initViewListener() {
-        btnSuccess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.requestData();
-            }
-        });
     }
 
     @Override
-    public void showData(List<Banner> banners) {
-        textView.setText(new Gson().toJson(banners));
+    public void onTabClick(TabItem tabItem) {
+        try {
+            mTabLayout.setCurrentTab(tabItem.index);
+            BaseFragment fragment= tabItem.tagFragmentClz.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment).commitAllowingStateLoss();
+
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

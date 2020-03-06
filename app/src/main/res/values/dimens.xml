@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--间距-->
+    <dimen name="row_spacing">8dp</dimen>
+    <dimen name="row_spacing_blank">6dp</dimen>
+    <dimen name="row_spacing_half">4dp</dimen>
+<!--字体-->
+    <dimen name="title_size">16sp</dimen>
+    <dimen name="common_size">14sp</dimen>
+    <dimen name="common_small_size">13sp</dimen>
+</resources>

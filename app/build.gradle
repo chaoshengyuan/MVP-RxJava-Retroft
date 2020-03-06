@@ -25,6 +25,7 @@ dependencies {
     api rootProject.ext.support["recyclerview-v7"]
     api rootProject.ext.support["constraint-layout"]
 
+    api rootProject.ext.dependencies.xrecyclerview
     //rxandroid
     api rootProject.ext.dependencies.rxandroid
 

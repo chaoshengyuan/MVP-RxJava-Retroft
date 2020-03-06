@@ -22,7 +22,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected Bundle mBundle;
     protected View mView;
     private MaterialDialog mDialog;
-    P mPresenter;
+    public P mPresenter;
     /**
      * 恢复数据
      *
@@ -84,7 +84,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView =  inflater.inflate(initLayoutID(), container, false);
+        initViews();
+        initViewListener();
         return mView;
+    }
+    protected <T extends View> T $(int id) {
+        return (T) mView.findViewById(id);
     }
     /**
      * fragment进行回退
@@ -96,7 +101,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     @Override
     public void onDetach() {
-        mPresenter.onDetachView();
+        if(mPresenter!=null){
+            mPresenter.onDetachView();
+        }
         super.onDetach();
     }
 
@@ -140,6 +147,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 初始化View控件
      */
     protected abstract void initViews();
+    /**
+     * 初始化View的事件
+     */
+    protected abstract void initViewListener();
 
     @Override
     public void showLoading(String msg) {

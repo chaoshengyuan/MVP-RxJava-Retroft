@@ -27,7 +27,8 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter<CommonViewHo
     public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(getItemLayoutID(viewType), parent, false);
-        CommonViewHolder holder = new CommonViewHolder(view,this);
+        CommonViewHolder holder = new CommonViewHolder(view);
+        initListener(view,holder);
         return holder;
     }
 
@@ -112,6 +113,62 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter<CommonViewHo
 //
     }
 
+    private void initListener(View itemView,final CommonViewHolder holder ){
+        //添加Item的点击事件
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickLinsener != null) {
+                    mOnItemClickLinsener.onItemClick(BaseRVAdapter.this,holder.getAdapterPosition());
+                }
+            }
+        });
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnItemLongClickLinsener != null) {
+                    mOnItemLongClickLinsener.onItemLongClick(BaseRVAdapter.this, holder.getAdapterPosition());
+                }
+                return false;
+            }
+        });
+    }
+    private OnItemClickLinsener mOnItemClickLinsener;
 
+    public void setOnItemClickLinsener(OnItemClickLinsener linsener) {
+        mOnItemClickLinsener = linsener;
+    }
+
+    OnItemLongClickLinsener mOnItemLongClickLinsener;
+
+    public void setOnItemLongClickLinsener(OnItemLongClickLinsener linsener) {
+        mOnItemLongClickLinsener = linsener;
+    }
+
+    /**
+     * XRecyclerView的Item的点击事件
+     */
+    public interface OnItemClickLinsener {
+        /**
+         * onItemClick
+         *
+         * @param baseAdapter
+         * @param position
+         */
+        void onItemClick(BaseRVAdapter baseAdapter, int position);
+    }
+
+    /**
+     * XRecyclerView的Item的点击事件
+     */
+    public interface OnItemLongClickLinsener {
+        /**
+         * onItemClick
+         *
+         * @param baseAdapter
+         * @param position
+         */
+        void onItemLongClick(BaseRVAdapter baseAdapter, int position);
+    }
 
 }

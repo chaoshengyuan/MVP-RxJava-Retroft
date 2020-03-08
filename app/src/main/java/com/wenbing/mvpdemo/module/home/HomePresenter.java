@@ -2,6 +2,7 @@ package com.wenbing.mvpdemo.module.home;
 
 import com.wenbing.mvpdemo.base.BasePresenter;
 import com.wenbing.mvpdemo.beans.Article;
+import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.retrofit.BaseObserver;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 
@@ -25,7 +26,9 @@ public class HomePresenter extends BasePresenter<IHomeView> {
 
                     @Override
                     protected void onError(ApiException ex) {
-
+                        if (getView() != null) {
+                            getView().showData(null, RecyclerFragment.ACTION_LOAD_FAILED);
+                        }
                     }
                 }));
     }

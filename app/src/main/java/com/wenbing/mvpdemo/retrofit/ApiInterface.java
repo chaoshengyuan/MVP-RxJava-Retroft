@@ -10,6 +10,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author gs_wenbing
@@ -38,6 +39,8 @@ class ApiInterface {
         @GET("tree/json")
         Observable<Response<List<Tree>>> getTreeList();
 
+        @GET("article/list/{page}/json")
+        Observable<Response<Article>> getTreeArticleList(@Path("page") int page, @Query("cid") int id);
     }
 
 }

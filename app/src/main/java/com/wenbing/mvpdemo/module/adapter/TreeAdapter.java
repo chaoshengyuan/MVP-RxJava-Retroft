@@ -3,6 +3,7 @@ package com.wenbing.mvpdemo.module.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ import java.util.Random;
  * @date: 2020/3/5 15:43
  */
 public class TreeAdapter extends BaseRVAdapter<Tree> {
-
+    private OnItemClickListener mOnItemClickListener = null;
     public TreeAdapter(Context context, List<Tree> beans) {
         super(context, beans);
     }
@@ -35,7 +36,7 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
 
     private Queue<TextView> mFlexItemTVCaches = new LinkedList<>();
     @Override
-    protected void onBindDataToView(CommonViewHolder holder, Tree bean, int position) {
+    protected void onBindDataToView(CommonViewHolder holder, final Tree bean, int position) {
         holder.setText(R.id.tv_title,bean.getName());
 
         FlowLayout flowLayout = holder.$(R.id.flowLayout);
@@ -43,6 +44,17 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
         for (int i = 0; i < bean.getChildren().size(); i++) {
             TextView child = createOrGetCacheFlexItemTextView(bean.getChildren().get(i));
             child.setText(bean.getChildren().get(i).getName());
+
+            final int finalI = i;
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onClick(bean.getChildren().get(finalI));
+                    }
+                }
+            });
+
             flowLayout.addView(child);
         }
     }
@@ -75,5 +87,11 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
         tv.setMaxLines(1);
         tv.setGravity(Gravity.CENTER);
         return tv;
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+    public interface OnItemClickListener {
+        void onClick(Tree.ChildrenBean bean);
     }
 }

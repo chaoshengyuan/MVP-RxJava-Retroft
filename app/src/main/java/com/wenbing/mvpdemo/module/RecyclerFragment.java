@@ -29,7 +29,7 @@ public class RecyclerFragment<T> extends Fragment {
     protected XRecyclerView mRecyclerView;
     private LoadingLayout rootView;
     protected BaseRVAdapter<T> mAdapter;
-    private int mCurrentPage = 1;
+    private int mCurrentPage = 0;
     public  int p_pageSize = 15;
     private RecyclerListener recyclerListener;
     /**
@@ -70,7 +70,7 @@ public class RecyclerFragment<T> extends Fragment {
             public void onRefresh() {
                 if (recyclerListener != null) {
                     mRecyclerView.reset();
-                    recyclerListener.loadData(ACTION_REFRESH, p_pageSize, mCurrentPage = 1);
+                    recyclerListener.loadData(ACTION_REFRESH, p_pageSize, mCurrentPage = 0);
                 }
             }
 
@@ -107,13 +107,13 @@ public class RecyclerFragment<T> extends Fragment {
         this.recyclerListener = recyclerListener;
     }
 
-    public boolean needCheckNet = true;
+    private boolean needCheckNet = true;
 
     public void setNeedCheckNet(boolean needCheckNet) {
         this.needCheckNet = needCheckNet;
     }
 
-    public void initData() {
+    private void initData() {
         if (rootView == null) {
             return;
         }
@@ -123,7 +123,7 @@ public class RecyclerFragment<T> extends Fragment {
         }
         rootView.showLoading("数据加载中...");
         if (recyclerListener != null) {
-            recyclerListener.loadData(ACTION_DEFAULT, p_pageSize, mCurrentPage = 1);
+            recyclerListener.loadData(ACTION_DEFAULT, p_pageSize, mCurrentPage = 0);
         }
     }
 

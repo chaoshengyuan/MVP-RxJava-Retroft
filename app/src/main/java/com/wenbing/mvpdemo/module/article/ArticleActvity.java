@@ -1,44 +1,47 @@
-package com.wenbing.mvpdemo.module.home;
+package com.wenbing.mvpdemo.module.article;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
-import com.wenbing.mvpdemo.base.BaseFragment;
+import com.wenbing.mvpdemo.base.BaseActivity;
 import com.wenbing.mvpdemo.beans.Article;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
-import com.wenbing.mvpdemo.module.adapter.HomeAdapter;
+import com.wenbing.mvpdemo.module.adapter.ArticleAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
 
 import java.util.ArrayList;
 
 /**
  * @author: wenbing
- * @date: 2020/3/5 10:39
+ * @date: 2020/3/8 11:50
  */
-public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeView, RecyclerFragment.RecyclerListener {
+public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IArticleView, RecyclerFragment.RecyclerListener {
     private BaseRVAdapter<Article.DataBean> mAdapter;
     RecyclerFragment<Article.DataBean> recyclerFragment;
+    private int pID;
 
     @Override
-    protected int initLayoutID() {
-        return R.layout.fragment_home;
+    protected ArticlePresenter createrPresenter() {
+        return new ArticlePresenter();
     }
 
     @Override
-    protected HomePresenter createrPresenter() {
-        return new HomePresenter();
+    protected int initLayoutID() {
+        return R.layout.activity_article;
     }
 
     @Override
     protected void initViews() {
-        mAdapter = new HomeAdapter(mContext, new ArrayList<Article.DataBean>());
-        FragmentManager fragmentManager = getFragmentManager();
+        mAdapter = new ArticleAdapter(this, new ArrayList<Article.DataBean>());
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
-        fragmentTransaction.add(R.id.home_frame, recyclerFragment).commit();
+        fragmentTransaction.add(R.id.article_frame, recyclerFragment).commit();
         recyclerFragment.init(mAdapter, this);
+
+        pID = getIntent().getIntExtra("id", -1);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     public void loadData(int action, int pageSize, int page) {
-        mPresenter.requestData(action, pageSize, page);
+        mPresenter.requestData(action, pageSize, page, pID);
     }
 
     @Override

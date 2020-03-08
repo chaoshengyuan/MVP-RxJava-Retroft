@@ -1,5 +1,6 @@
 package com.wenbing.mvpdemo.module.adapter;
 
+
 import android.content.Context;
 
 import com.wenbing.mvpdemo.R;
@@ -11,17 +12,16 @@ import java.util.List;
 
 /**
  * @author: wenbing
- * @date: 2020/3/5 13:05
+ * @date: 2020/3/8 11:54
  */
-public class HomeAdapter extends BaseRVAdapter<Article.DataBean> {
-
-    public HomeAdapter(Context context, List<Article.DataBean> beans) {
+public class ArticleAdapter extends BaseRVAdapter<Article.DataBean> {
+    public ArticleAdapter(Context context, List<Article.DataBean> beans) {
         super(context, beans);
     }
 
     @Override
     public int getItemLayoutID(int viewType) {
-        return R.layout.item_home;
+        return R.layout.item_article;
     }
 
     @Override

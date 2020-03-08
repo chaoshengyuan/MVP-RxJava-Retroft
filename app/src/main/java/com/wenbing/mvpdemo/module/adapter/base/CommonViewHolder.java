@@ -15,28 +15,11 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     private final SparseArray<View> mViews;
     public View itemView;
 
-    public CommonViewHolder(View itemView,final BaseRVAdapter adapter) {
+    public CommonViewHolder(View itemView) {
         super(itemView);
         this.mViews = new SparseArray<>();
         this.itemView = itemView;
-        //添加Item的点击事件
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemClickLinsener != null) {
-                    mOnItemClickLinsener.onItemClick(adapter, getAdapterPosition());
-                }
-            }
-        });
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mOnItemLongClickLinsener != null) {
-                    mOnItemLongClickLinsener.onItemLongClick(adapter, getAdapterPosition());
-                }
-                return false;
-            }
-        });
+
     }
 
 
@@ -133,41 +116,4 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    private OnItemClickLinsener mOnItemClickLinsener;
-
-    public void setOnItemClickLinsener(OnItemClickLinsener linsener) {
-        mOnItemClickLinsener = linsener;
-    }
-
-    OnItemLongClickLinsener mOnItemLongClickLinsener;
-
-    public void setOnItemLongClickLinsener(OnItemLongClickLinsener linsener) {
-        mOnItemLongClickLinsener = linsener;
-    }
-
-    /**
-     * XRecyclerView的Item的点击事件
-     */
-    public interface OnItemClickLinsener {
-        /**
-         * onItemClick
-         *
-         * @param baseAdapter
-         * @param position
-         */
-        void onItemClick(BaseRVAdapter baseAdapter, int position);
-    }
-
-    /**
-     * XRecyclerView的Item的点击事件
-     */
-    public interface OnItemLongClickLinsener {
-        /**
-         * onItemClick
-         *
-         * @param baseAdapter
-         * @param position
-         */
-        void onItemLongClick(BaseRVAdapter baseAdapter, int position);
-    }
 }

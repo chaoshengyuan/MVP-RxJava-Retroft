@@ -1,5 +1,6 @@
 package com.wenbing.mvpdemo.module.tree;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -9,7 +10,7 @@ import com.wenbing.mvpdemo.base.BaseFragment;
 import com.wenbing.mvpdemo.beans.Tree;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.module.adapter.TreeAdapter;
-import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
+import com.wenbing.mvpdemo.module.article.ArticleActvity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.List;
  * @author: wenbing
  * @date: 2020/3/5 10:51
  */
-public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeView , RecyclerFragment.RecyclerListener {
-    private BaseRVAdapter<Tree> mAdapter;
+public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeView, RecyclerFragment.RecyclerListener, TreeAdapter.OnItemClickListener {
+    private TreeAdapter mAdapter;
     RecyclerFragment<Tree> recyclerFragment;
 
     @Override
@@ -44,7 +45,7 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
 
     @Override
     protected void initViewListener() {
-
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -61,5 +62,12 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
     @Override
     public void showData(List<Tree> treeList,int action) {
         recyclerFragment.loadCompleted(action,"",treeList);
+    }
+
+    @Override
+    public void onClick(Tree.ChildrenBean bean) {
+        Intent intent = new Intent(mContext, ArticleActvity.class);
+        intent.putExtra("id", bean.getId());
+        mContext.startActivity(intent);
     }
 }

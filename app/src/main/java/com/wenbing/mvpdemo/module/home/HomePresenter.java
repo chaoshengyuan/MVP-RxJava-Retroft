@@ -2,9 +2,12 @@ package com.wenbing.mvpdemo.module.home;
 
 import com.wenbing.mvpdemo.base.BasePresenter;
 import com.wenbing.mvpdemo.beans.Article;
+import com.wenbing.mvpdemo.beans.BannerBean;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.retrofit.BaseObserver;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
+
+import java.util.List;
 
 /**
  * @author: wenbing
@@ -32,4 +35,26 @@ public class HomePresenter extends BasePresenter<IHomeView> {
                     }
                 }));
     }
+
+    public void requestBanner() {
+        if (getView() == null) {
+            return;
+        }
+        addDisposable(mApiServer.toSubscribe(mApiServer.getApi().getBanner(),
+                new BaseObserver<List<BannerBean>>(getView(),false) {
+                    @Override
+                    protected void onSuccess(List<BannerBean> bannerBeans) {
+                        if (getView() != null) {
+                            getView().showBanner(bannerBeans);
+                        }
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+
+                    }
+                }));
+    }
+
+
 }

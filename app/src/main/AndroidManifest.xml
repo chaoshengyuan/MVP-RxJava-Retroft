@@ -21,6 +21,8 @@
         <activity
             android:name=".module.article.ArticleActvity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation" />
+        <activity android:name=".module.article.ArticleDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
     </application>
 
 </manifest>

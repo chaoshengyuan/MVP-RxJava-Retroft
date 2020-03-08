@@ -113,6 +113,10 @@ public class RecyclerFragment<T> extends Fragment {
         this.needCheckNet = needCheckNet;
     }
 
+    public XRecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
     private void initData() {
         if (rootView == null) {
             return;
@@ -125,6 +129,7 @@ public class RecyclerFragment<T> extends Fragment {
         if (recyclerListener != null) {
             recyclerListener.loadData(ACTION_DEFAULT, p_pageSize, mCurrentPage = 0);
         }
+
     }
 
     public void setLoadingEnable(boolean enabled) {

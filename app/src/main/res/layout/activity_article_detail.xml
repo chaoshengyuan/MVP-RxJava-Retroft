@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-    <FrameLayout
-        android:id="@+id/home_frame"
+
+    <WebView
+        android:id="@+id/article_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>

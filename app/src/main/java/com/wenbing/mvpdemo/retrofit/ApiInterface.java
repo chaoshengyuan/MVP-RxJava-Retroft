@@ -1,7 +1,7 @@
 package com.wenbing.mvpdemo.retrofit;
 
 import com.wenbing.mvpdemo.beans.Article;
-import com.wenbing.mvpdemo.beans.Banner;
+import com.wenbing.mvpdemo.beans.BannerBean;
 import com.wenbing.mvpdemo.beans.Tree;
 import com.wenbing.mvpdemo.beans.base.Response;
 
@@ -24,7 +24,7 @@ class ApiInterface {
          * @return 首页banner
          */
         @GET("banner/json")
-        public Observable<Response<List<Banner>>> getBanner();
+        public Observable<Response<List<BannerBean>>> getBanner();
 
         /**
          * @param page 页码

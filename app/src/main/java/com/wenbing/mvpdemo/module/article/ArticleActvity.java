@@ -1,5 +1,6 @@
 package com.wenbing.mvpdemo.module.article;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * @author: wenbing
  * @date: 2020/3/8 11:50
  */
-public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IArticleView, RecyclerFragment.RecyclerListener {
+public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IArticleView, RecyclerFragment.RecyclerListener, BaseRVAdapter.OnItemClickLinsener {
     private BaseRVAdapter<Article.DataBean> mAdapter;
     RecyclerFragment<Article.DataBean> recyclerFragment;
     private int pID;
@@ -46,7 +47,7 @@ public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IA
 
     @Override
     protected void initViewListener() {
-
+        mAdapter.setOnItemClickLinsener(this);
     }
 
     @Override
@@ -62,5 +63,13 @@ public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IA
     @Override
     public void showData(Article article, int action) {
         recyclerFragment.loadCompleted(action, "", article == null ? null : article.getDatas());
+    }
+
+    @Override
+    public void onItemClick(BaseRVAdapter baseAdapter, int position) {
+        Article.DataBean dataBean = mAdapter.getBeans().get(position - 1);
+        Intent intent = new Intent(this, ArticleDetailActivity.class);
+        intent.putExtra("url", dataBean.getLink());
+        startActivity(intent);
     }
 }

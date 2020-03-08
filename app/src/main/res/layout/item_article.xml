@@ -11,34 +11,13 @@
         android:paddingRight="@dimen/row_spacing"
         android:layout_marginTop="@dimen/row_spacing">
         <TextView
-            android:id="@+id/tv_chapter_title"
+            android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="类别:"
-            android:textColor="@color/text_grey_color"
+            android:text="jingbin"
+            android:textColor="@color/blue"
             android:textSize="@dimen/common_small_size" />
 
-        <TextView
-            android:id="@+id/tv_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv_chapter_title"
-            android:layout_marginLeft="@dimen/row_spacing"
-            android:text="自助"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/common_size" />
-
-        <TextView
-            android:id="@+id/tv_time_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_time"
-            android:text="时间:"
-            android:textColor="@color/text_grey_color"
-            android:textSize="@dimen/common_small_size" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -46,16 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/row_spacing"
             android:text="2018-02-09 08:20"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/common_size"/>
+            android:textColor="@color/text_grey_color"
+            android:textSize="@dimen/common_small_size"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/title_size"
+        android:textSize="@dimen/common_size"
         android:textColor="@color/text_color"
         android:text="自定义View二篇，如何自定义一个规范的ViewGroup"
         android:layout_margin="@dimen/row_spacing"
@@ -68,34 +46,30 @@
         android:paddingBottom="@dimen/row_spacing">
 
         <TextView
-            android:id="@+id/tv_author_title"
+            android:id="@+id/tv_chapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="作者："
+            android:layout_centerVertical="true"
+            android:text="自助"
             android:textColor="@color/text_grey_color"
             android:textSize="@dimen/common_small_size" />
 
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_author_title"
-            android:text="jingbin"
-            android:textColor="@color/text_grey_color"
-            android:textSize="@dimen/common_small_size" />
+
 
         <ImageView
             android:id="@+id/tv_state"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/tab_home_selected"
-             />
+            />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="@dimen/row_spacing"
+        android:layout_marginBottom="@dimen/row_spacing"
         android:background="@color/line_bg" />
 
 </LinearLayout>

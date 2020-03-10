@@ -2,6 +2,6 @@
     <string name="app_name">MyMVPDemo</string>
     <string name="tab_home">首页</string>
     <string name="tab_tree">体系</string>
-    <string name="tab_project">工程</string>
-    <string name="tab_me">我</string>
+    <string name="tab_project">项目</string>
+    <string name="tab_me">我的</string>
 </resources>

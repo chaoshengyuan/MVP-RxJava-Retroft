@@ -28,7 +28,7 @@ ext {
     ]
     //依赖第三方配置
     dependencies = [
-            "xrecyclerview"             : "com.jcodecraeer:xrecyclerview:1.2.7",
+            "xrecyclerview"                        : "com.jcodecraeer:xrecyclerview:1.2.7",
 
             //rxjava
             "rxjava"                               : "io.reactivex.rxjava2:rxjava:2.2.3",

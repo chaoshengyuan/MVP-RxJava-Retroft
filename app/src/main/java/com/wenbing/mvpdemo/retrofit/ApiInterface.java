@@ -2,6 +2,8 @@ package com.wenbing.mvpdemo.retrofit;
 
 import com.wenbing.mvpdemo.beans.Article;
 import com.wenbing.mvpdemo.beans.BannerBean;
+import com.wenbing.mvpdemo.beans.ProjectArticle;
+import com.wenbing.mvpdemo.beans.ProjectTree;
 import com.wenbing.mvpdemo.beans.Tree;
 import com.wenbing.mvpdemo.beans.base.Response;
 
@@ -41,6 +43,18 @@ class ApiInterface {
 
         @GET("article/list/{page}/json")
         Observable<Response<Article>> getTreeArticleList(@Path("page") int page, @Query("cid") int id);
+
+        /**
+         * @return  项目分类
+         */
+        @GET("project/tree/json")
+        Observable<Response<List<ProjectTree>>> getProjectTreeList();
+
+        /**
+         * @return  项目列表数据
+         */
+        @GET("project/list/{page}/json")
+        Observable<Response<ProjectArticle>> getProjectList(@Path("page") int page, @Query("cid") int id);
     }
 
 }

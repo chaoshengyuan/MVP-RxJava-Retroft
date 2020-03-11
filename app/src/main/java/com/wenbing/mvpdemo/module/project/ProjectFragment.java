@@ -28,7 +28,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements I
     }
 
     @Override
-    protected void initViews() {
+    protected void initViewsAndListener() {
         ViewPager mViewPager = $(R.id.page);
         TabLayout tabLayout = $(R.id.tab_layout);
         fragmentAdapter = new MultiFragmentPagerAdapter<>(getChildFragmentManager(),
@@ -44,22 +44,19 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements I
                     }
                 });
         mViewPager.setAdapter(fragmentAdapter);
+        mViewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(mViewPager);//与ViewPage建立关系
-        loadData();
     }
+
     @Override
-    protected void initViewListener() {
-    }
-
-
-    private void loadData() {
+    protected void initData() {
+        super.initData();
         mPresenter.requestData();
     }
 
     @Override
     public void showTabData(List<ProjectTree> projectTreeList) {
         fragmentAdapter.setData(projectTreeList);
-//        fragmentAdapter.notifyDataSetChanged();
     }
 
 }

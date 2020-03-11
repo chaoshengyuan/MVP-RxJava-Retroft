@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.beans.ProjectArticle;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
@@ -35,12 +36,12 @@ public class ProjectArticleAdapter extends BaseRVAdapter<ProjectArticle.DatasBea
         holder.setText(R.id.tv_content, bean.getDesc());
         holder.setText(R.id.tv_chapter, bean.getSuperChapterName() + "-" + bean.getChapterName());
         ImageView iv = holder.$(R.id.iv_icon);
-//        RequestOptions options = new RequestOptions()
-//                .placeholder(R.drawable.img_default)//图片加载出来前，显示的图片
-//                .fallback( R.drawable.img_blank) //url为空的时候,显示的图片
-//                .error(drawable.img_load_failure);//图片加载失败后，显示的图片
-//        .apply(options)
-        Glide.with(mContext).load(bean.getEnvelopePic()).into(iv);
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.default_project_img)//图片加载出来前，显示的图片
+                .fallback( R.drawable.default_project_img) //url为空的时候,显示的图片
+                .error(R.drawable.default_project_img);//图片加载失败后，显示的图片
+
+        Glide.with(mContext).load(bean.getEnvelopePic()).apply(options).into(iv);
 //        holder.setImageBitmap(R.id.iv_icon,)
     }
 }

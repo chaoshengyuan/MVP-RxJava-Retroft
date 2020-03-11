@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -53,11 +54,7 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
     }
 
     @Override
-    protected void initViews() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mProjectTree = bundle.getParcelable("projectTree");
-        }
+    protected void initViewsAndListener() {
         mAdapter = new ProjectArticleAdapter(mContext, new ArrayList<ProjectArticle.DatasBean>());
         rootView = $(R.id.root_view);
         mRecyclerView = $(R.id.recyclerview);
@@ -65,16 +62,6 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallClipRotatePulse);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.SquareSpin);
         mRecyclerView.setAdapter(mAdapter);
-        initData();
-    }
-
-    private void initData(){
-        rootView.showLoading("数据加载中...");
-        loadData(RecyclerFragment.ACTION_DEFAULT,mCurrentPage = 0);
-    }
-
-    @Override
-    protected void initViewListener() {
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -84,7 +71,7 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
 
             @Override
             public void onLoadMore() {
-                 loadData(RecyclerFragment.ACTION_LOAD_MORE, mCurrentPage = mCurrentPage + 1);
+                loadData(RecyclerFragment.ACTION_LOAD_MORE, mCurrentPage = mCurrentPage + 1);
 
             }
         });
@@ -98,7 +85,28 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
         mAdapter.setOnItemClickLinsener(this);
     }
 
-    public void loadData(int action,  int page) {
+    @Override
+    protected void initData() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mProjectTree = bundle.getParcelable("projectTree");
+        }
+    }
+
+    @Override
+    protected void onVisible(boolean isFirstVisible) {
+        super.onVisible(isFirstVisible);
+        if(isFirstVisible){
+            if(mProjectTree!=null){
+                rootView.showLoading("数据加载中...");
+                loadData(RecyclerFragment.ACTION_DEFAULT,mCurrentPage = 0);
+            }else{
+                Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void loadData(int action, int page) {
         mPresenter.requestData(action, page, mProjectTree.getId());
     }
 
@@ -143,4 +151,5 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
         intent.putExtra("url", datasBean.getLink());
         startActivity(intent);
     }
+
 }

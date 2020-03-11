@@ -49,14 +49,28 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @Override
-    protected void initViews() {
+    protected void initViewsAndListener() {
         mAdapter = new HomeAdapter(mContext, new ArrayList<Article.DataBean>());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
         fragmentTransaction.add(R.id.home_frame, recyclerFragment).commit();
         recyclerFragment.init(mAdapter, this);
+        mAdapter.setOnItemClickLinsener(this);
     }
+
+    @Override
+    public void onRecyclerCreated(XRecyclerView recyclerView) {
+        createBanner();
+        mAdapter.setXRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void loadData(int action, int pageSize, int page) {
+        mPresenter.requestData(action, pageSize, page);
+        mPresenter.requestBanner();
+    }
+
     private void createBanner() {
         View header =   LayoutInflater.from(mContext).inflate(R.layout.layout_banner, (ViewGroup)$(android.R.id.content),false);
         banner = header.findViewById(R.id.banner);
@@ -96,25 +110,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-    }
-
-
-    @Override
-    protected void initViewListener() {
-        mAdapter.setOnItemClickLinsener(this);
-    }
-
-    @Override
-    public void onRecyclerCreated(XRecyclerView recyclerView) {
-        createBanner();
-        mAdapter.setXRecyclerView(recyclerView);
-    }
-
-    @Override
-    public void loadData(int action, int pageSize, int page) {
-        mPresenter.requestData(action, pageSize, page);
-
-        mPresenter.requestBanner();
     }
 
     @Override

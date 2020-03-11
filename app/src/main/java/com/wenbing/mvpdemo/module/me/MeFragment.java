@@ -19,12 +19,12 @@ public class MeFragment extends BaseFragment<MePresenter> implements IMeView {
     }
 
     @Override
-    protected void initViews() {
+    protected void initViewsAndListener() {
 
     }
 
     @Override
-    protected void initViewListener() {
+    protected void initData() {
 
     }
 }

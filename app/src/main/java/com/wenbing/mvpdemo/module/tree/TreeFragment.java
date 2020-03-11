@@ -34,17 +34,13 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
     }
 
     @Override
-    protected void initViews() {
+    protected void initViewsAndListener() {
         mAdapter = new TreeAdapter(mContext, new ArrayList<Tree>());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
         fragmentTransaction.add(R.id.tree_frame, recyclerFragment).commit();
         recyclerFragment.init(mAdapter, this);
-    }
-
-    @Override
-    protected void initViewListener() {
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -63,6 +59,7 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
     public void showData(List<Tree> treeList,int action) {
         recyclerFragment.loadCompleted(action,"",treeList);
     }
+
 
     @Override
     public void onClick(Tree.ChildrenBean bean) {

@@ -19,17 +19,17 @@
         android:layout_width="80dp"
         android:layout_height="80dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:src="@drawable/loading_dialog_bg"
-            android:layout_height="match_parent"
-            android:alpha="0.6"/>
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:src="@drawable/loading_dialog_bg"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:alpha="0.6"/>-->
 
         <ImageView
             android:id="@+id/iv_loading"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:src="@drawable/loading_progress_dialog"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
     <TextView
@@ -40,6 +40,7 @@
         android:gravity="center"
         android:text="正在加载"
         android:textColor="@color/text_grey_color"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="gone"/>
 
 </LinearLayout>

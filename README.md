@@ -347,9 +347,10 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
 这样显示整个例子就完成了，效果如下：
 
-<img src="https://github.com/gs-wenbing/MVP-RxJava-Retroft/blob/master/image/Screenshot_20200304_143119_com.wenbing.mvpdemo.jpg" alt="Screenshot_20200304_143114_com.wenbing.mvpdemo" width="375" />
+<img src="https://github.com/gs-wenbing/MVP-RxJava-Retroft/blob/master/image/screenshot.jpg" alt="截图" />
 
 ### 说明
+感谢 玩Android 开放API: https://wanandroid.com/blog/show/2
 
 如果对您有帮助，希望您可以点右上角 "Star" 支持一下 谢谢！ ^^
 

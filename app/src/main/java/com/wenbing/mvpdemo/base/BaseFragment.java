@@ -9,6 +9,8 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.wenbing.mvpdemo.utils.MaterialDialogUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Fragment 的所有基类
  * @author gs_wenbing
@@ -47,6 +49,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends LazyFragment
     protected void initialize() {
         initViewsAndListener();
         initData();
+        if (isRegisterEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    protected boolean isRegisterEventBus(){
+        return false;
     }
 
     @Override
@@ -96,5 +105,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends LazyFragment
     @Override
     public void showError(String msg) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        hideLoading();
+        super.onDestroyView();
+        if (isRegisterEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

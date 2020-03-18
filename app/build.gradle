@@ -58,4 +58,5 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
 
     api rootProject.ext.dependencies.banner
+    api rootProject.ext.dependencies.eventbus
 }

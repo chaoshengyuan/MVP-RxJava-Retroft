@@ -4,7 +4,7 @@ import com.wenbing.mvpdemo.beans.base.Response;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 import com.wenbing.mvpdemo.retrofit.error.ExceptionEngine;
 import com.wenbing.mvpdemo.retrofit.error.ServerException;
-import com.wenbing.mvpdemo.utils.RxUtil;
+import com.wenbing.mvpdemo.utils.RxUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -65,7 +65,7 @@ public class ApiServer {
     public<T> DisposableObserver<T> toSubscribe(Observable<Response<T>> sourse, DisposableObserver<T> observer) {
         return sourse.map(new ServerResultFunc<T>())
                 .onErrorResumeNext(new ExceptionFunc<T>())
-                .compose(RxUtil.<T>background())
+                .compose(RxUtils.<T>background())
                 .subscribeWith(observer);
     }
 

@@ -9,12 +9,20 @@
 
     <!--流式布局-->
     <declare-styleable name="TagFlowLayout">
-        <attr name="auto_select_effect" format="boolean"/>
-        <attr name="max_select" format="integer"/>
+        <attr name="auto_select_effect" format="boolean" />
+        <attr name="max_select" format="integer" />
         <attr name="gravity">
             <enum name="left" value="-1" />
             <enum name="center" value="0" />
             <enum name="right" value="1" />
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="InputView">
+        <attr name="leftIcon" format="reference" />
+        <attr name="delIcon" format="reference" />
+        <attr name="eyeIcon" format="reference" />
+        <attr name="hint" format="reference|string"/>
+        <attr name="isPassword" format="boolean"/>
     </declare-styleable>
 </resources>

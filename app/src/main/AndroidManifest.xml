@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:name=".MyAPP"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,6 +23,8 @@
             android:name=".module.article.ArticleActvity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation" />
         <activity android:name=".module.article.ArticleDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
+        <activity android:name=".module.login.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
     </application>
 

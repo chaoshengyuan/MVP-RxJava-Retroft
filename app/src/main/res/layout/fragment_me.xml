@@ -21,6 +21,7 @@
             android:src="@drawable/header"
             />
         <TextView
+            android:id="@+id/tv_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -28,6 +29,29 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/iv_header"
             android:text="12244454"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_account"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:text="排名：--"/>
+            <TextView
+                android:id="@+id/tv_coinCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginLeft="20dp"
+                android:textSize="10sp"
+                android:text="等级：--"/>
+        </LinearLayout>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,16 +59,20 @@
         android:orientation="vertical"
         android:layout_below="@+id/layout_header"
         android:background="@drawable/corner_view"
-        android:layout_marginTop="-40dp"
+        android:layout_marginTop="-30dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="40dp"
-        android:padding="20dp"
+        android:layout_marginBottom="120dp"
+        android:paddingTop="20dp"
         >
         <RelativeLayout
+            android:id="@+id/layout_coin"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:orientation="horizontal"
+            android:background="@drawable/item_click_selector"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -62,9 +90,13 @@
                 android:src="@drawable/arrow"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_collected"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:orientation="horizontal"
+            android:background="@drawable/item_click_selector"
             android:layout_marginTop="@dimen/row_spacing"
             >
             <TextView
@@ -83,11 +115,14 @@
                 android:src="@drawable/arrow"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_setting"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/row_spacing"
-            >
+            android:background="@drawable/item_click_selector"
+            android:layout_marginTop="@dimen/row_spacing">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,5 +138,14 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/arrow"/>
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/button_click_selector"
+            android:layout_margin="20dp"
+            android:text="退出"/>
     </LinearLayout>
 </RelativeLayout>

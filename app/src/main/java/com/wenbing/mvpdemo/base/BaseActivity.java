@@ -1,8 +1,11 @@
 package com.wenbing.mvpdemo.base;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
+import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.wenbing.mvpdemo.utils.MaterialDialogUtils;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements IBaseView {
     private MaterialDialog mDialog;
     protected P mPresenter;
+    private SparseArray<View> mCacheViews = null;
 
     protected abstract P createrPresenter();
 
@@ -36,7 +40,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     /**
      * 初始化View的事件
      */
-    protected abstract void initViewListener();
+    protected abstract void initListener();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(initLayoutID());
         initPresenter();
         initViews();
-        initViewListener();
+        initListener();
     }
 
     /**
@@ -56,6 +60,20 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter.onAttachView(this);
         }
+    }
+
+    protected <V extends View> V $(@IdRes int id) {
+        if (mCacheViews == null) {
+            mCacheViews = new SparseArray<>();
+        }
+        View view = mCacheViews.get(id);
+        if (view == null) {
+            view = findViewById(id);
+            if (view != null) {
+                mCacheViews.put(id, view);
+            }
+        }
+        return (V) view;
     }
 
 

@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-public class NetWorkUtil {
+public class NetWorkUtils {
 	public static ConnectivityManager manager;
 //	public static Context context;
 	public static final int NETWORK_TYPE_NONE = 0; // 断网情况

@@ -2,7 +2,7 @@ package com.wenbing.mvpdemo.retrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.wenbing.mvpdemo.utils.LogUtil;
+import com.wenbing.mvpdemo.utils.LogUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +39,7 @@ class RetrofitFactory {
     }
 
     private static OkHttpClient getClient() {
-        LogUtil.setLevel(LogUtil.DEBUG);
+        LogUtils.setLevel(LogUtils.DEBUG);
         return new OkHttpClient
                 .Builder()
                 .addInterceptor(new CommonInterceptor())
@@ -49,7 +49,7 @@ class RetrofitFactory {
                 .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        LogUtil.i(message);
+                        LogUtils.i(message);
                     }
                 }).setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();

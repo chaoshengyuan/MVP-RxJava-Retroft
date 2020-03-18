@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/item_click_selector"
+    android:layout_marginBottom="1dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -95,11 +97,5 @@
             />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/row_spacing"
-        android:layout_marginBottom="@dimen/row_spacing"
-        android:background="@color/line_bg" />
 
 </LinearLayout>

@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author gs_wenbing
  * @date 2019/9/5 13:19
  */
-public class RxUtil {
+public class RxUtils {
     /**
      * 后台线程执行同步，主线程执行异步操作
      *

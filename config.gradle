@@ -54,6 +54,7 @@ ext {
             "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
             //
             "banner"                               : "com.youth.banner:banner:1.4.10",
+            "eventbus"                             : "org.greenrobot:eventbus:3.2.0",
 
     ]
 }

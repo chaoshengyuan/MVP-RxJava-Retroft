@@ -46,7 +46,7 @@ public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IA
     }
 
     @Override
-    protected void initViewListener() {
+    protected void initListener() {
         mAdapter.setOnItemClickLinsener(this);
     }
 

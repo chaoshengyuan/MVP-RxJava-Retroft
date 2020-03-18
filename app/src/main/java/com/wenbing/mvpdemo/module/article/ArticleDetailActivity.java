@@ -63,7 +63,7 @@ public class ArticleDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initViewListener() {
+    protected void initListener() {
 
     }
 }

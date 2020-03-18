@@ -2,6 +2,8 @@ package com.wenbing.mvpdemo.retrofit;
 
 import com.wenbing.mvpdemo.beans.Article;
 import com.wenbing.mvpdemo.beans.BannerBean;
+import com.wenbing.mvpdemo.beans.CoinBean;
+import com.wenbing.mvpdemo.beans.LoginBean;
 import com.wenbing.mvpdemo.beans.ProjectArticle;
 import com.wenbing.mvpdemo.beans.ProjectTree;
 import com.wenbing.mvpdemo.beans.Tree;
@@ -10,7 +12,10 @@ import com.wenbing.mvpdemo.beans.base.Response;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -55,6 +60,22 @@ class ApiInterface {
          */
         @GET("project/list/{page}/json")
         Observable<Response<ProjectArticle>> getProjectList(@Path("page") int page, @Query("cid") int id);
+
+
+        /**
+         * @return  获取个人积分，需要登录后访问
+         */
+        @GET("lg/coin/userinfo/json")
+        Observable<Response<CoinBean>> getUserCoin();
+
+
+        /**
+         * @return  登录
+         */
+        @FormUrlEncoded
+        @POST("user/login")
+        Observable<Response<LoginBean>> login(@Field("username") String username,
+                                              @Field("password") String password);
     }
 
 }

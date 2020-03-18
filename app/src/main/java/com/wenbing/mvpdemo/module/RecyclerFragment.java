@@ -13,7 +13,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
-import com.wenbing.mvpdemo.utils.NetWorkUtil;
+import com.wenbing.mvpdemo.utils.NetWorkUtils;
 import com.wenbing.mvpdemo.widget.LoadingLayout;
 
 import java.util.List;
@@ -121,7 +121,7 @@ public class RecyclerFragment<T> extends Fragment {
         if (rootView == null) {
             return;
         }
-        if (needCheckNet && !NetWorkUtil.isNetworkAvailable(getActivity())) {
+        if (needCheckNet && !NetWorkUtils.isNetworkAvailable(getActivity())) {
             rootView.showFailed("网络不好哦，请稍后再试");
             return;
         }

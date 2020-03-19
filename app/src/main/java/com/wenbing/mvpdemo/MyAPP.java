@@ -16,6 +16,7 @@ public class MyAPP extends Application {
     public void onCreate() {
         super.onCreate();
         ContextUtils.init(this);
+
         RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {

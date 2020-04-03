@@ -21,6 +21,7 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     //support
+    api rootProject.ext.support["support-v4"]
     api rootProject.ext.support["appcompat-v7"]
     api rootProject.ext.support["recyclerview-v7"]
     api rootProject.ext.support["constraint-layout"]
@@ -61,4 +62,8 @@ dependencies {
 
     api rootProject.ext.dependencies.banner
     api rootProject.ext.dependencies.eventbus
+    //腾讯浏览服务
+    api rootProject.ext.dependencies.tbssdk
+
+    api rootProject.ext.dependencies.titlebar
 }

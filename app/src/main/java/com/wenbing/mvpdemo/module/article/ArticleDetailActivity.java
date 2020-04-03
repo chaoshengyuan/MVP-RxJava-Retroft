@@ -1,20 +1,33 @@
 package com.wenbing.mvpdemo.module.article;
 
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.KeyEvent;
+import android.view.View;
+
+import com.hjq.bar.OnTitleBarListener;
+import com.hjq.bar.TitleBar;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseActivity;
 import com.wenbing.mvpdemo.base.BasePresenter;
+import com.wenbing.mvpdemo.widget.X5WebView;
 
 /**
  * @author: wenbing
  * @date: 2020/3/8 13:27
  */
 public class ArticleDetailActivity extends BaseActivity {
-    WebView webView;
+    TitleBar titleBar;
+    X5WebView webView;
+
+    public static void start(Context context, String url, String title) {
+        Intent intent = new Intent(context, ArticleDetailActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("title", title);
+        context.startActivity(intent);
+    }
+
     @Override
     protected BasePresenter createrPresenter() {
         return null;
@@ -27,43 +40,63 @@ public class ArticleDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-      String url = getIntent().getStringExtra("url");
-        webView = findViewById(R.id.article_webview);
-        //WebView加载web资源
-        webView.loadUrl(url);
-        //覆盖WebView默认通过第三方或者是系统浏览器打开网页的行为，使得网页可以在WebView中打开
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //返回值是true的时候是控制网页在WebView中去打开，如果为false调用系统浏览器或第三方浏览器打开
-                view.loadUrl(url);
-                return true;
-            }
-            //WebViewClient帮助WebView去处理一些页面控制和请求通知
-        });
-        //启用支持Javascript
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        //WebView加载页面优先使用缓存加载
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        //页面加载
-        webView.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                //newProgress   1-100之间的整数
-                if (newProgress == 100) {
-                    //页面加载完成，关闭ProgressDialog
-                } else {
-                    //网页正在加载，打开ProgressDialog
-                }
-            }
-
-
-        });
+        String webUrl = getIntent().getStringExtra("url");
+        String title = getIntent().getStringExtra("title");
+        titleBar = (TitleBar) $(R.id.title_bar);
+        titleBar.setTitle(title);
+        webView = (X5WebView) $(R.id.article_webview);
+        webView.loadUrl(webUrl);
     }
 
     @Override
     protected void initListener() {
+        titleBar.setOnTitleBarListener(new OnTitleBarListener() {
+            @Override
+            public void onLeftClick(View v) {
+                finish();
+            }
 
+            @Override
+            public void onTitleClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+
+            }
+        });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (webView.handleKeyEvent(keyCode, event)) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(webView!=null){
+            webView.onResume();
+            webView.getSettings().setLightTouchEnabled(true);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(webView!=null){
+            webView.onPause();
+            webView.getSettings().setLightTouchEnabled(false);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (this.webView != null) {
+            webView.destroy();
+        }
+        super.onDestroy();
     }
 }

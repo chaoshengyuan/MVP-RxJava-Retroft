@@ -57,6 +57,9 @@ ext {
             //
             "banner"                               : "com.youth.banner:banner:1.4.10",
             "eventbus"                             : "org.greenrobot:eventbus:3.2.0",
+            //https://x5.tencent.com/tbs/sdk.html
+            "tbssdk"                               : "com.tencent.tbs.tbssdk:sdk:43697",
+            "titlebar"                             : "com.hjq:titlebar:6.0",
 
     ]
 }

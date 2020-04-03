@@ -153,8 +153,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     @Override
     public void onItemClick(BaseRVAdapter baseAdapter, int position) {
         Article.DataBean dataBean = mAdapter.getBeans().get(position - 2);
-        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
-        intent.putExtra("url", dataBean.getLink());
-        startActivity(intent);
+        ArticleDetailActivity.start(mContext,dataBean.getLink(),dataBean.getTitle());
     }
 }

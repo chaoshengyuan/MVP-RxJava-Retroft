@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#2E9DED</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="actionbarx_common_bottom_line_color_def">#00000000</color>
+    <color name="actionbarx_common_status_bar_color_def">#00000000</color>
+
     <color name="white">#FFFFFF</color>
 
     <color name="black">#000000</color>

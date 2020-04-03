@@ -147,9 +147,7 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
     @Override
     public void onItemClick(BaseRVAdapter baseAdapter, int position) {
         ProjectArticle.DatasBean datasBean = mAdapter.getBeans().get(position - 1);
-        Intent intent = new Intent(mContext, ArticleDetailActivity.class);
-        intent.putExtra("url", datasBean.getLink());
-        startActivity(intent);
+        ArticleDetailActivity.start(mContext,datasBean.getLink(),datasBean.getTitle());
     }
 
 }

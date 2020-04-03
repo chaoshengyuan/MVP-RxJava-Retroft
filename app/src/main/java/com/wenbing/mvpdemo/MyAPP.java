@@ -7,6 +7,10 @@ import android.content.Context;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.hjq.bar.ITitleBarStyle;
+import com.hjq.bar.TitleBar;
+import com.hjq.bar.style.TitleBarLightStyle;
+import com.wenbing.mvpdemo.common.WebviewTBS;
 
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -25,7 +29,9 @@ public class MyAPP extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-
+        TitleBar.initStyle(new TitleBarLightStyle(getApplicationContext()));
+        //初始化百度TBS
+        WebviewTBS.getAPIWebview().initTbs(getApplicationContext());
         RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
@@ -33,6 +39,7 @@ public class MyAPP extends Application {
             }
         });
     }
+
     public static Application getApp() {
         if (application == null) {
             throw new NullPointerException("App is not registered in the manifest");

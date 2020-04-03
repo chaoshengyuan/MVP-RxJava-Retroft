@@ -25,4 +25,6 @@
         <attr name="hint" format="reference|string"/>
         <attr name="isPassword" format="boolean"/>
     </declare-styleable>
+
+
 </resources>

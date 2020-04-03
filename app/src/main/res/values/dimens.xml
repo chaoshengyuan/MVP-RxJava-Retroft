@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="actionbarx_common_bottom_line_height_def">0dp</dimen>
+    <dimen name="actionbarx_common_title_bar_height_def">44dp</dimen>
 <!--间距-->
     <dimen name="row_spacing">8dp</dimen>
     <dimen name="row_spacing_blank">6dp</dimen>

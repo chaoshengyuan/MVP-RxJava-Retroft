@@ -63,8 +63,6 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
 
     @Override
     public void onClick(Tree.ChildrenBean bean) {
-        Intent intent = new Intent(mContext, ArticleActvity.class);
-        intent.putExtra("id", bean.getId());
-        mContext.startActivity(intent);
+        ArticleActvity.start(mContext,bean.getId(),bean.getName());
     }
 }

@@ -1,5 +1,6 @@
 package com.wenbing.mvpdemo.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.jaeger.library.StatusBarUtil;
+import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.utils.MaterialDialogUtils;
 
 /**
@@ -47,6 +50,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(initLayoutID());
+//        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary),0);
         initPresenter();
         initViews();
         initListener();

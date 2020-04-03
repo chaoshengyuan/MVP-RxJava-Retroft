@@ -60,6 +60,7 @@ ext {
             //https://x5.tencent.com/tbs/sdk.html
             "tbssdk"                               : "com.tencent.tbs.tbssdk:sdk:43697",
             "titlebar"                             : "com.hjq:titlebar:6.0",
+            "statusbarutil"                        : "com.jaeger.statusbarutil:library:1.5.1",
 
     ]
 }

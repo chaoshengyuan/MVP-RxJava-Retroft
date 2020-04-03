@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2E9DED</color>
-    <color name="colorPrimaryDark">#2E9DED</color>
+    <color name="colorPrimary">#4374DB</color>
+    <color name="colorPrimaryDark">#4374DB</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="actionbarx_common_bottom_line_color_def">#00000000</color>
@@ -13,7 +13,7 @@
     <color name="gray">#808080</color>
     <color name="yellow">#FFFF00</color>
     <color name="green">#008000</color>
-    <color name="blue">#2E9DED</color>
+    <color name="blue">#4374DB</color>
     <color name="orange">#FFA500</color>
 
     <color name="main_bg">#F7F7F7</color>

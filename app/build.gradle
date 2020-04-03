@@ -64,6 +64,6 @@ dependencies {
     api rootProject.ext.dependencies.eventbus
     //腾讯浏览服务
     api rootProject.ext.dependencies.tbssdk
-
+    api rootProject.ext.dependencies.statusbarutil
     api rootProject.ext.dependencies.titlebar
 }

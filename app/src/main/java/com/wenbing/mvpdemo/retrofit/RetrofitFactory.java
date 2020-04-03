@@ -1,7 +1,12 @@
 package com.wenbing.mvpdemo.retrofit;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.wenbing.mvpdemo.MyAPP;
 import com.wenbing.mvpdemo.utils.LogUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -42,7 +47,8 @@ class RetrofitFactory {
         LogUtils.setLevel(LogUtils.DEBUG);
         return new OkHttpClient
                 .Builder()
-                .addInterceptor(new CommonInterceptor())
+                .cookieJar(MyAPP.getCookieJar())
+                //.addInterceptor(new CommonInterceptor())
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15,TimeUnit.SECONDS)

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.wenbing.mvpdemo.MyAPP;
+
 /**
  * @author: wenbing
  * @date: 2020/3/18 9:45
@@ -13,7 +15,7 @@ public class SPUtils {
     private final SharedPreferences sp;
 
     private static class SPHolder{
-        private static final SharedPreferences INSTANCE = PreferenceManager.getDefaultSharedPreferences(ContextUtils.getAppContext());
+        private static final SharedPreferences INSTANCE = PreferenceManager.getDefaultSharedPreferences(MyAPP.getAppContext());
     }
 
     private SPUtils(@NonNull String name) {
@@ -33,7 +35,7 @@ public class SPUtils {
     }
 
     private static SharedPreferences getSharedPreferences(@NonNull String name) {
-        return ContextUtils.getAppContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+        return MyAPP.getAppContext().getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     private static SharedPreferences getDefaultSharedPreferences() {

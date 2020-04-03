@@ -18,7 +18,7 @@ public class ProjectPresenter extends BasePresenter<IProjectView> {
             return;
         }
         addDisposable(mApiServer.toSubscribe(mApiServer.getApi().getProjectTreeList(),
-                new BaseObserver<List<ProjectTree>>(getView(), true) {
+                new BaseObserver<List<ProjectTree>>(getView(), false) {
                     @Override
                     protected void onSuccess(List<ProjectTree> treeList) {
                         if (getView() != null) {

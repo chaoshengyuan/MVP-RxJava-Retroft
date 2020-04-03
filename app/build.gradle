@@ -40,6 +40,8 @@ dependencies {
     //CallAdapterFactory的Rx依赖包
     api rootProject.ext.dependencies["adapter-rxjava"]
     api rootProject.ext.dependencies["logging-interceptor"]
+    //cookie本地存储,持久化
+    api rootProject.ext.dependencies["PersistentCookieJar"]
 
     //json解析
     api rootProject.ext.dependencies.gson

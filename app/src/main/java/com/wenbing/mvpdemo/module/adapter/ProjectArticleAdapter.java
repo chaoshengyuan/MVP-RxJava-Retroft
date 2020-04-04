@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.wenbing.mvpdemo.R;
-import com.wenbing.mvpdemo.beans.ProjectArticle;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.CommonViewHolder;
 
@@ -18,8 +18,8 @@ import java.util.List;
  * @author: wenbing
  * @date: 2020/3/8 11:54
  */
-public class ProjectArticleAdapter extends BaseRVAdapter<ProjectArticle.DatasBean> {
-    public ProjectArticleAdapter(Context context, List<ProjectArticle.DatasBean> beans) {
+public class ProjectArticleAdapter extends BaseRVAdapter<ArticleBean.DataBean> {
+    public ProjectArticleAdapter(Context context, List<ArticleBean.DataBean> beans) {
         super(context, beans);
     }
 
@@ -29,7 +29,7 @@ public class ProjectArticleAdapter extends BaseRVAdapter<ProjectArticle.DatasBea
     }
 
     @Override
-    protected void onBindDataToView(CommonViewHolder holder, ProjectArticle.DatasBean bean, int position) {
+    protected void onBindDataToView(CommonViewHolder holder, ArticleBean.DataBean bean, int position) {
         holder.setText(R.id.tv_author, TextUtils.isEmpty(bean.getAuthor()) ? bean.getShareUser() : bean.getAuthor());
         holder.setText(R.id.tv_time, bean.getNiceDate());
         holder.setText(R.id.tv_title, bean.getTitle());
@@ -42,6 +42,10 @@ public class ProjectArticleAdapter extends BaseRVAdapter<ProjectArticle.DatasBea
                 .error(R.drawable.default_project_img);//图片加载失败后，显示的图片
 
         Glide.with(mContext).load(bean.getEnvelopePic()).apply(options).into(iv);
-//        holder.setImageBitmap(R.id.iv_icon,)
+        if(bean.isCollect()){
+            holder.setImageResource(R.id.iv_state,R.drawable.collected);
+        }else{
+            holder.setImageResource(R.id.iv_state,R.drawable.un_collected);
+        }
     }
 }

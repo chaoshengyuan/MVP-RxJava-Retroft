@@ -1,6 +1,5 @@
 package com.wenbing.mvpdemo.module.project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -10,13 +9,17 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseFragment;
-import com.wenbing.mvpdemo.beans.ProjectArticle;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.beans.ProjectTree;
+import com.wenbing.mvpdemo.event.CollectEvent;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.module.adapter.ProjectArticleAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
 import com.wenbing.mvpdemo.module.article.ArticleDetailActivity;
 import com.wenbing.mvpdemo.widget.LoadingLayout;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ import java.util.List;
  */
 public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter> implements IProjectActicleView, BaseRVAdapter.OnItemClickLinsener {
 
-    private BaseRVAdapter<ProjectArticle.DatasBean> mAdapter;
+    private BaseRVAdapter<ArticleBean.DataBean> mAdapter;
     protected XRecyclerView mRecyclerView;
     private LoadingLayout rootView;
     private ProjectTree mProjectTree;
@@ -55,7 +58,7 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
 
     @Override
     protected void initViewsAndListener() {
-        mAdapter = new ProjectArticleAdapter(mContext, new ArrayList<ProjectArticle.DatasBean>());
+        mAdapter = new ProjectArticleAdapter(mContext, new ArrayList<ArticleBean.DataBean>());
         rootView = $(R.id.root_view);
         mRecyclerView = $(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -111,10 +114,10 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
     }
 
     @Override
-    public void showData(ProjectArticle projectArticle, int action) {
-        loadCompleted(action, projectArticle == null ? null : projectArticle.getDatas());
+    public void showData(ArticleBean article, int action) {
+        loadCompleted(action, article == null ? null : article.getDatas());
     }
-    public void loadCompleted(int action, List<ProjectArticle.DatasBean> list) {
+    public void loadCompleted(int action, List<ArticleBean.DataBean> list) {
         if (getActivity() == null) {
             return;
         }
@@ -146,8 +149,23 @@ public class ProjectArticleFragment extends BaseFragment<ProjectArtcilePresenter
 
     @Override
     public void onItemClick(BaseRVAdapter baseAdapter, int position) {
-        ProjectArticle.DatasBean datasBean = mAdapter.getBeans().get(position - 1);
-        ArticleDetailActivity.start(mContext,datasBean.getLink(),datasBean.getTitle());
+        ArticleBean.DataBean dataBean = mAdapter.getBeans().get(position - 1);
+        ArticleDetailActivity.start(mContext,dataBean);
+    }
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCollectedAction(CollectEvent collectEvent){
+        List<ArticleBean.DataBean> dataBeans  = mAdapter.getBeans();
+        for (int i = 0; i < dataBeans.size(); i++) {
+            if(dataBeans.get(i).getId()==collectEvent.getArticleID()){
+                dataBeans.get(i).setCollect(collectEvent.isCollected());
+                mAdapter.notifyItemChanged(i+ 1);
+                break;
+            }
+        }
+    }
 }

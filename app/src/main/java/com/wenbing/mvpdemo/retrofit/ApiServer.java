@@ -1,5 +1,6 @@
 package com.wenbing.mvpdemo.retrofit;
 
+import com.wenbing.mvpdemo.beans.base.BaseBean;
 import com.wenbing.mvpdemo.beans.base.Response;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
 import com.wenbing.mvpdemo.retrofit.error.ExceptionEngine;
@@ -50,6 +51,9 @@ public class ApiServer {
                 throw new ServerException(response.getErrorCode(), response.getErrorMsg());
             }
             //服务器请求数据成功，返回里面的数据实体
+            if(response.getData()==null){
+                return (T) new BaseBean();
+            }
             return response.getData();
         }
     }

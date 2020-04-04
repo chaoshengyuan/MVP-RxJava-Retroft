@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wenbing.mvpdemo.R;
-import com.wenbing.mvpdemo.beans.Tree;
+import com.wenbing.mvpdemo.beans.TreeBean;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.CommonViewHolder;
 import com.wenbing.mvpdemo.utils.Utils;
@@ -23,9 +23,9 @@ import java.util.Random;
  * @author: wenbing
  * @date: 2020/3/5 15:43
  */
-public class TreeAdapter extends BaseRVAdapter<Tree> {
+public class TreeAdapter extends BaseRVAdapter<TreeBean> {
     private OnItemClickListener mOnItemClickListener = null;
-    public TreeAdapter(Context context, List<Tree> beans) {
+    public TreeAdapter(Context context, List<TreeBean> beans) {
         super(context, beans);
     }
 
@@ -36,7 +36,7 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
 
     private Queue<TextView> mFlexItemTVCaches = new LinkedList<>();
     @Override
-    protected void onBindDataToView(CommonViewHolder holder, final Tree bean, int position) {
+    protected void onBindDataToView(CommonViewHolder holder, final TreeBean bean, int position) {
         holder.setText(R.id.tv_title,bean.getName());
 
         FlowLayout flowLayout = holder.$(R.id.flowLayout);
@@ -68,7 +68,7 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
         }
     }
 
-    private TextView createOrGetCacheFlexItemTextView(Tree.ChildrenBean bean) {
+    private TextView createOrGetCacheFlexItemTextView(TreeBean.ChildrenBean bean) {
         TextView tv = mFlexItemTVCaches.poll();
         if (tv != null) {
             return tv;
@@ -92,6 +92,6 @@ public class TreeAdapter extends BaseRVAdapter<Tree> {
         mOnItemClickListener = onItemClickListener;
     }
     public interface OnItemClickListener {
-        void onClick(Tree.ChildrenBean bean);
+        void onClick(TreeBean.ChildrenBean bean);
     }
 }

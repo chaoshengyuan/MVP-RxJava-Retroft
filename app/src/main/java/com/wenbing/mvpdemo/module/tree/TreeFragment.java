@@ -1,13 +1,12 @@
 package com.wenbing.mvpdemo.module.tree;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseFragment;
-import com.wenbing.mvpdemo.beans.Tree;
+import com.wenbing.mvpdemo.beans.TreeBean;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.module.adapter.TreeAdapter;
 import com.wenbing.mvpdemo.module.article.ArticleActvity;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeView, RecyclerFragment.RecyclerListener, TreeAdapter.OnItemClickListener {
     private TreeAdapter mAdapter;
-    RecyclerFragment<Tree> recyclerFragment;
+    RecyclerFragment<TreeBean> recyclerFragment;
 
     @Override
     protected int initLayoutID() {
@@ -35,7 +34,7 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
 
     @Override
     protected void initViewsAndListener() {
-        mAdapter = new TreeAdapter(mContext, new ArrayList<Tree>());
+        mAdapter = new TreeAdapter(mContext, new ArrayList<TreeBean>());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
@@ -56,13 +55,13 @@ public class TreeFragment extends BaseFragment<TreePresenter> implements ITreeVi
     }
 
     @Override
-    public void showData(List<Tree> treeList,int action) {
+    public void showData(List<TreeBean> treeList, int action) {
         recyclerFragment.loadCompleted(action,"",treeList);
     }
 
 
     @Override
-    public void onClick(Tree.ChildrenBean bean) {
+    public void onClick(TreeBean.ChildrenBean bean) {
         ArticleActvity.start(mContext,bean.getId(),bean.getName());
     }
 }

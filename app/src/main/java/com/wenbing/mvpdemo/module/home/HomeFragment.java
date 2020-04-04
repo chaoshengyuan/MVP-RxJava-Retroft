@@ -1,6 +1,5 @@
 package com.wenbing.mvpdemo.module.home;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +14,9 @@ import android.view.ViewGroup;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseFragment;
-import com.wenbing.mvpdemo.beans.Article;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.beans.BannerBean;
+import com.wenbing.mvpdemo.event.CollectEvent;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.module.adapter.HomeAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
@@ -25,6 +25,9 @@ import com.wenbing.mvpdemo.widget.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeView, RecyclerFragment.RecyclerListener, BaseRVAdapter.OnItemClickLinsener {
     private HomeAdapter mAdapter;
-    private RecyclerFragment<Article.DataBean> recyclerFragment;
+    private RecyclerFragment<ArticleBean.DataBean> recyclerFragment;
 //    private List<BannerBean>  bannerDatas;
     private Banner banner;
     @Override
@@ -50,7 +53,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     protected void initViewsAndListener() {
-        mAdapter = new HomeAdapter(mContext, new ArrayList<Article.DataBean>());
+        mAdapter = new HomeAdapter(mContext, new ArrayList<ArticleBean.DataBean>());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
@@ -63,6 +66,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     public void onRecyclerCreated(XRecyclerView recyclerView) {
         createBanner();
         mAdapter.setXRecyclerView(recyclerView);
+    }
+
+    @Override
+    protected void onVisible(boolean isFirstVisible) {
+        super.onVisible(isFirstVisible);
+        if(!isFirstVisible){
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -113,8 +124,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @Override
-    public void showData(Article article, int action) {
-        recyclerFragment.loadCompleted(action, "", article == null ? null : article.getDatas());
+    public void showData(ArticleBean ArticleBean, int action) {
+        recyclerFragment.loadCompleted(action, "", ArticleBean == null ? null : ArticleBean.getDatas());
     }
 
     @Override
@@ -152,7 +163,25 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     public void onItemClick(BaseRVAdapter baseAdapter, int position) {
-        Article.DataBean dataBean = mAdapter.getBeans().get(position - 2);
-        ArticleDetailActivity.start(mContext,dataBean.getLink(),dataBean.getTitle());
+        ArticleBean.DataBean dataBean = mAdapter.getBeans().get(position - 2);
+        ArticleDetailActivity.start(mContext,dataBean);
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCollectedAction(CollectEvent collectEvent){
+        List<ArticleBean.DataBean> dataBeans  = mAdapter.getBeans();
+        for (int i = 0; i < dataBeans.size(); i++) {
+            if(dataBeans.get(i).getId()==collectEvent.getArticleID()){
+                dataBeans.get(i).setCollect(collectEvent.isCollected());
+                //2是因为RecyclerView加了2个header
+                mAdapter.notifyItemChanged(i+ 2);
+                break;
+            }
+        }
     }
 }

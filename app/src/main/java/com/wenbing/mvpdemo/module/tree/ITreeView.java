@@ -1,7 +1,7 @@
 package com.wenbing.mvpdemo.module.tree;
 
 import com.wenbing.mvpdemo.base.IBaseView;
-import com.wenbing.mvpdemo.beans.Tree;
+import com.wenbing.mvpdemo.beans.TreeBean;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  * @date: 2020/3/5 10:51
  */
 public interface ITreeView extends IBaseView {
-    void showData(List<Tree> TreeList, int action);
+    void showData(List<TreeBean> TreeList, int action);
 }

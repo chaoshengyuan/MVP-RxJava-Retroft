@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
-
     <com.hjq.bar.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="wrap_content"
@@ -13,10 +12,9 @@
         android:background="@color/colorPrimary"
         app:titleColor="@color/white"
         app:barStyle="transparent"
-        app:rightIcon="@drawable/un_collected1"
         app:title="默认的标题栏" />
-    <com.wenbing.mvpdemo.widget.X5WebView
-        android:id="@+id/article_webview"
+    <FrameLayout
+        android:id="@+id/collect_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.wenbing.mvpdemo.base;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -14,6 +13,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.jaeger.library.StatusBarUtil;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.utils.MaterialDialogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Activity 的所有基类
@@ -55,6 +56,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initPresenter();
         initViews();
         initListener();
+        if (isRegisterEventBus()) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -80,7 +84,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         return (V) view;
     }
-
+    protected boolean isRegisterEventBus(){
+        return false;
+    }
 
     @Override
     public void showLoading(String msg) {
@@ -109,6 +115,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.onDetachView();
+        }
+        if (isRegisterEventBus()) {
+            EventBus.getDefault().unregister(this);
         }
     }
 }

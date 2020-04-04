@@ -10,6 +10,7 @@ import com.wenbing.mvpdemo.base.BaseFragment;
 import com.wenbing.mvpdemo.beans.CoinBean;
 import com.wenbing.mvpdemo.beans.LoginBean;
 import com.wenbing.mvpdemo.event.LoginEvent;
+import com.wenbing.mvpdemo.module.collect.CollectListActivity;
 import com.wenbing.mvpdemo.module.login.LoginActivity;
 import com.wenbing.mvpdemo.utils.UserUtils;
 
@@ -99,6 +100,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements IMeView, Vi
             case R.id.layout_coin:
                 break;
             case R.id.layout_collected:
+                CollectListActivity.start(mContext);
                 break;
             case R.id.layout_setting:
 

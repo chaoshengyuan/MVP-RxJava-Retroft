@@ -1,7 +1,7 @@
 package com.wenbing.mvpdemo.module.project;
 
 import com.wenbing.mvpdemo.base.IBaseView;
-import com.wenbing.mvpdemo.beans.ProjectArticle;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 
 /**
  * @author: wenbing
@@ -9,5 +9,5 @@ import com.wenbing.mvpdemo.beans.ProjectArticle;
  */
 public interface IProjectActicleView extends IBaseView {
 
-    void showData(ProjectArticle projectArticle, int action);
+    void showData(ArticleBean article, int action);
 }

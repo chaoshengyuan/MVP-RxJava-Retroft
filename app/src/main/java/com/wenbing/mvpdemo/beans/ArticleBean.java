@@ -1,12 +1,18 @@
 package com.wenbing.mvpdemo.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.wenbing.mvpdemo.beans.base.BaseBean;
+
 import java.util.List;
 
 /**
  * @author: wenbing
  * @date: 2020/3/5 13:15
  */
-public class Article {
+
+public class ArticleBean extends BaseBean{
 
 
     /**
@@ -83,7 +89,7 @@ public class Article {
         this.datas = datas;
     }
 
-    public static class DataBean {
+    public static class DataBean extends BaseBean implements Parcelable {
         /**
          * apkLink :
          * audit : 1
@@ -148,6 +154,7 @@ public class Article {
         private int userId;
         private int visible;
         private int zan;
+        private List<DataBean.TagsBean> tags;
 
         public String getApkLink() {
             return apkLink;
@@ -389,5 +396,158 @@ public class Article {
             this.zan = zan;
         }
 
+
+        public List<DataBean.TagsBean> getTags() {
+            return tags;
+        }
+
+        public void setTags(List<DataBean.TagsBean> tags) {
+            this.tags = tags;
+        }
+        public static class TagsBean extends BaseBean implements Parcelable {
+            /**
+             * name : 项目
+             * url : /project/list/1?cid=294
+             */
+
+            private String name;
+            private String url;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.name);
+                dest.writeString(this.url);
+            }
+
+            public TagsBean() {
+            }
+
+            protected TagsBean(Parcel in) {
+                this.name = in.readString();
+                this.url = in.readString();
+            }
+
+            public static final Parcelable.Creator<TagsBean> CREATOR = new Parcelable.Creator<TagsBean>() {
+                @Override
+                public TagsBean createFromParcel(Parcel source) {
+                    return new TagsBean(source);
+                }
+
+                @Override
+                public TagsBean[] newArray(int size) {
+                    return new TagsBean[size];
+                }
+            };
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.apkLink);
+            dest.writeInt(this.audit);
+            dest.writeString(this.author);
+            dest.writeByte(this.canEdit ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.chapterId);
+            dest.writeString(this.chapterName);
+            dest.writeByte(this.collect ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.courseId);
+            dest.writeString(this.desc);
+            dest.writeString(this.descMd);
+            dest.writeString(this.envelopePic);
+            dest.writeByte(this.fresh ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.id);
+            dest.writeString(this.link);
+            dest.writeString(this.niceDate);
+            dest.writeString(this.niceShareDate);
+            dest.writeString(this.origin);
+            dest.writeString(this.prefix);
+            dest.writeString(this.projectLink);
+            dest.writeLong(this.publishTime);
+            dest.writeInt(this.selfVisible);
+            dest.writeLong(this.shareDate);
+            dest.writeString(this.shareUser);
+            dest.writeInt(this.superChapterId);
+            dest.writeString(this.superChapterName);
+            dest.writeString(this.title);
+            dest.writeInt(this.type);
+            dest.writeInt(this.userId);
+            dest.writeInt(this.visible);
+            dest.writeInt(this.zan);
+            dest.writeTypedList(this.tags);
+        }
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            this.apkLink = in.readString();
+            this.audit = in.readInt();
+            this.author = in.readString();
+            this.canEdit = in.readByte() != 0;
+            this.chapterId = in.readInt();
+            this.chapterName = in.readString();
+            this.collect = in.readByte() != 0;
+            this.courseId = in.readInt();
+            this.desc = in.readString();
+            this.descMd = in.readString();
+            this.envelopePic = in.readString();
+            this.fresh = in.readByte() != 0;
+            this.id = in.readInt();
+            this.link = in.readString();
+            this.niceDate = in.readString();
+            this.niceShareDate = in.readString();
+            this.origin = in.readString();
+            this.prefix = in.readString();
+            this.projectLink = in.readString();
+            this.publishTime = in.readLong();
+            this.selfVisible = in.readInt();
+            this.shareDate = in.readLong();
+            this.shareUser = in.readString();
+            this.superChapterId = in.readInt();
+            this.superChapterName = in.readString();
+            this.title = in.readString();
+            this.type = in.readInt();
+            this.userId = in.readInt();
+            this.visible = in.readInt();
+            this.zan = in.readInt();
+            this.tags = in.createTypedArrayList(TagsBean.CREATOR);
+        }
+
+        public static final Parcelable.Creator<DataBean> CREATOR = new Parcelable.Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 }

@@ -1,12 +1,12 @@
 package com.wenbing.mvpdemo.retrofit;
 
-import com.wenbing.mvpdemo.beans.Article;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.beans.BannerBean;
 import com.wenbing.mvpdemo.beans.CoinBean;
 import com.wenbing.mvpdemo.beans.LoginBean;
-import com.wenbing.mvpdemo.beans.ProjectArticle;
 import com.wenbing.mvpdemo.beans.ProjectTree;
-import com.wenbing.mvpdemo.beans.Tree;
+import com.wenbing.mvpdemo.beans.TreeBean;
+import com.wenbing.mvpdemo.beans.base.BaseBean;
 import com.wenbing.mvpdemo.beans.base.Response;
 
 import java.util.List;
@@ -38,16 +38,16 @@ class ApiInterface {
          * @return  首页文章列表
          */
         @GET("article/list/{page}/json")
-        Observable<Response<Article>> getArticleList(@Path("page") Integer page);
+        Observable<Response<ArticleBean>> getArticleList(@Path("page") Integer page);
 
         /**
          * @return  体系数据
          */
         @GET("tree/json")
-        Observable<Response<List<Tree>>> getTreeList();
+        Observable<Response<List<TreeBean>>> getTreeList();
 
         @GET("article/list/{page}/json")
-        Observable<Response<Article>> getTreeArticleList(@Path("page") int page, @Query("cid") int id);
+        Observable<Response<ArticleBean>> getTreeArticleList(@Path("page") int page, @Query("cid") int id);
 
         /**
          * @return  项目分类
@@ -59,7 +59,7 @@ class ApiInterface {
          * @return  项目列表数据
          */
         @GET("project/list/{page}/json")
-        Observable<Response<ProjectArticle>> getProjectList(@Path("page") int page, @Query("cid") int id);
+        Observable<Response<ArticleBean>> getProjectList(@Path("page") int page, @Query("cid") int id);
 
 
         /**
@@ -76,6 +76,34 @@ class ApiInterface {
         @POST("user/login")
         Observable<Response<LoginBean>> login(@Field("username") String username,
                                               @Field("password") String password);
+
+        /**
+         * @param page 页码
+         * @return  收藏文章列表
+         */
+        @GET("lg/collect/list/{page}/json")
+        Observable<Response<ArticleBean>> getCollectList(@Path("page") Integer page);
+
+        /**
+         * @return  收藏站内文章
+         */
+        @POST("lg/collect/{id}/json")
+        Observable<Response<BaseBean>> collect(@Path("id") int id);
+        /**
+         * @return  取消收藏
+         */
+        @POST("lg/uncollect_originId/{id}/json")
+        Observable<Response<BaseBean>> uncollect(@Path("id") int id);
+
+        /**
+         * 收藏站外文章
+         * 方法：POST
+         */
+        @FormUrlEncoded
+        @POST("lg/collect/add/json")
+        Observable<Response<ArticleBean>> collect(@Field("title") String title,
+                                     @Field("author") String author,
+                                     @Field("link") String link);
     }
 
 }

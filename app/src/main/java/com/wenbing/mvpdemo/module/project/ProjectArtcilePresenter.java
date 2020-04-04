@@ -1,7 +1,7 @@
 package com.wenbing.mvpdemo.module.project;
 
 import com.wenbing.mvpdemo.base.BasePresenter;
-import com.wenbing.mvpdemo.beans.ProjectArticle;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.retrofit.BaseObserver;
 import com.wenbing.mvpdemo.retrofit.error.ApiException;
@@ -17,11 +17,11 @@ public class ProjectArtcilePresenter extends BasePresenter<IProjectActicleView> 
             return;
         }
         addDisposable(mApiServer.toSubscribe(mApiServer.getApi().getProjectList(page,id),
-                new BaseObserver<ProjectArticle>(getView(), false) {
+                new BaseObserver<ArticleBean>(getView(), false) {
                     @Override
-                    protected void onSuccess(ProjectArticle projectArticle) {
+                    protected void onSuccess(ArticleBean articleBean) {
                         if (getView() != null) {
-                            getView().showData(projectArticle, action);
+                            getView().showData(articleBean, action);
                         }
                     }
 

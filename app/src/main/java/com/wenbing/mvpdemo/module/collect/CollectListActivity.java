@@ -1,4 +1,13 @@
-package com.wenbing.mvpdemo.module.article;
+/**
+ * Copyright (C), 2015-2020, XXX有限公司
+ * Author: zwb
+ * Date: 2020/4/4 15:03
+ * Description: 收藏列表
+ * History:
+ * <author> <time> <version> <desc>
+ * 作者姓名 修改时间 版本号 描述
+ */
+package com.wenbing.mvpdemo.module.collect;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +20,14 @@ import com.hjq.bar.TitleBar;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseActivity;
+import com.wenbing.mvpdemo.base.IBaseView;
 import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.event.CollectEvent;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.module.adapter.ArticleAdapter;
+import com.wenbing.mvpdemo.module.adapter.CollectAdapter;
 import com.wenbing.mvpdemo.module.adapter.base.BaseRVAdapter;
+import com.wenbing.mvpdemo.module.article.ArticleDetailActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -24,45 +36,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author: wenbing
- * @date: 2020/3/8 11:50
+ * @Author: zwb
+ * @Date: 2020/4/4 15:03
  */
-public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IArticleView, RecyclerFragment.RecyclerListener, BaseRVAdapter.OnItemClickLinsener {
+public class CollectListActivity extends BaseActivity<CollectListPresenter> implements ICollectListView, RecyclerFragment.RecyclerListener, BaseRVAdapter.OnItemClickLinsener {
     private BaseRVAdapter<ArticleBean.DataBean> mAdapter;
     RecyclerFragment<ArticleBean.DataBean> recyclerFragment;
-    private int pID;
-
     private TitleBar titleBar;
 
-    public static void start(Context context, int id, String title) {
-        Intent intent = new Intent(context, ArticleActvity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("title", title);
+    public static void start(Context context) {
+        Intent intent = new Intent(context, CollectListActivity.class);
         context.startActivity(intent);
     }
 
     @Override
-    protected ArticlePresenter createrPresenter() {
-        return new ArticlePresenter();
+    protected CollectListPresenter createrPresenter() {
+        return new CollectListPresenter();
     }
 
     @Override
     protected int initLayoutID() {
-        return R.layout.activity_article;
+        return R.layout.activity_collect;
     }
 
     @Override
     protected void initViews() {
-        mAdapter = new ArticleAdapter(this, new ArrayList<ArticleBean.DataBean>());
+        mAdapter = new CollectAdapter(this, new ArrayList<ArticleBean.DataBean>());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recyclerFragment = RecyclerFragment.newInstance();
-        fragmentTransaction.add(R.id.article_frame, recyclerFragment).commit();
+        fragmentTransaction.add(R.id.collect_frame, recyclerFragment).commit();
         recyclerFragment.init(mAdapter, this);
-        pID = getIntent().getIntExtra("id", -1);
-        String title = getIntent().getStringExtra("title");
         titleBar = $(R.id.title_bar);
-        titleBar.setTitle(title);
+        titleBar.setTitle("收藏列表");
     }
 
     @Override
@@ -93,7 +99,7 @@ public class ArticleActvity extends BaseActivity<ArticlePresenter> implements IA
 
     @Override
     public void loadData(int action, int pageSize, int page) {
-        mPresenter.requestData(action, pageSize, page, pID);
+        mPresenter.requestData(action, pageSize, page);
     }
 
     @Override

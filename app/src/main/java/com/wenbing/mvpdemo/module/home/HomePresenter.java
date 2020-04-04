@@ -1,7 +1,7 @@
 package com.wenbing.mvpdemo.module.home;
 
 import com.wenbing.mvpdemo.base.BasePresenter;
-import com.wenbing.mvpdemo.beans.Article;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.beans.BannerBean;
 import com.wenbing.mvpdemo.module.RecyclerFragment;
 import com.wenbing.mvpdemo.retrofit.BaseObserver;
@@ -19,11 +19,11 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             return;
         }
         addDisposable(mApiServer.toSubscribe(mApiServer.getApi().getArticleList(page),
-                new BaseObserver<Article>(getView(),false) {
+                new BaseObserver<ArticleBean>(getView(),false) {
                     @Override
-                    protected void onSuccess(Article article) {
+                    protected void onSuccess(ArticleBean ArticleBean) {
                         if (getView() != null) {
-                            getView().showData(article,action);
+                            getView().showData(ArticleBean,action);
                         }
                     }
 

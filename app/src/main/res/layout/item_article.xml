@@ -59,7 +59,7 @@
 
 
         <ImageView
-            android:id="@+id/tv_state"
+            android:id="@+id/iv_state"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"

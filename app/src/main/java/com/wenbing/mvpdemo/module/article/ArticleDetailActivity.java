@@ -10,27 +10,28 @@ import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
 import com.wenbing.mvpdemo.R;
 import com.wenbing.mvpdemo.base.BaseActivity;
-import com.wenbing.mvpdemo.base.BasePresenter;
+import com.wenbing.mvpdemo.beans.ArticleBean;
 import com.wenbing.mvpdemo.widget.X5WebView;
 
 /**
  * @author: wenbing
  * @date: 2020/3/8 13:27
  */
-public class ArticleDetailActivity extends BaseActivity {
+public class ArticleDetailActivity extends BaseActivity<ArticleDetailPresenter> implements IArticleDetailView {
     TitleBar titleBar;
     X5WebView webView;
 
-    public static void start(Context context, String url, String title) {
+    ArticleBean.DataBean ArticleBean;
+
+    public static void start(Context context, ArticleBean.DataBean dataBean) {
         Intent intent = new Intent(context, ArticleDetailActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
+        intent.putExtra("dataBean", dataBean);
         context.startActivity(intent);
     }
 
     @Override
-    protected BasePresenter createrPresenter() {
-        return null;
+    protected ArticleDetailPresenter createrPresenter() {
+        return new ArticleDetailPresenter();
     }
 
     @Override
@@ -40,12 +41,15 @@ public class ArticleDetailActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        String webUrl = getIntent().getStringExtra("url");
-        String title = getIntent().getStringExtra("title");
-        titleBar = (TitleBar) $(R.id.title_bar);
-        titleBar.setTitle(title);
-        webView = (X5WebView) $(R.id.article_webview);
-        webView.loadUrl(webUrl);
+        ArticleBean = getIntent().getParcelableExtra("dataBean");
+        titleBar = $(R.id.title_bar);
+        titleBar.setTitle(ArticleBean.getTitle());
+        webView = $(R.id.article_webview);
+        webView.loadUrl(ArticleBean.getLink());
+
+        if(ArticleBean.isCollect()){
+            titleBar.setRightIcon(R.drawable.collected1);
+        }
     }
 
     @Override
@@ -63,10 +67,30 @@ public class ArticleDetailActivity extends BaseActivity {
 
             @Override
             public void onRightClick(View v) {
+//                    mPresenter.requestData(ArticleBean.getTitle(), ArticleBean.getAuthor(), ArticleBean.getLink());
+                if(!ArticleBean.isCollect()){
+                    mPresenter.collect(ArticleBean.getId());
+                }else{
+                    mPresenter.unCollect(ArticleBean.getId());
 
+                }
             }
         });
     }
+
+
+    @Override
+    public void collectSuccess() {
+        ArticleBean.setCollect(true);
+        titleBar.setRightIcon(R.drawable.collected1);
+    }
+
+    @Override
+    public void unCollectSuccess() {
+        ArticleBean.setCollect(false);
+        titleBar.setRightIcon(R.drawable.un_collected1);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (webView.handleKeyEvent(keyCode, event)) {
@@ -99,4 +123,5 @@ public class ArticleDetailActivity extends BaseActivity {
         }
         super.onDestroy();
     }
+
 }

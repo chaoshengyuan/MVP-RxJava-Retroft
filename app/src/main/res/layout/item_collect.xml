@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="jingbin"
-            android:textColor="@color/blue"
             android:textSize="@dimen/common_small_size" />
 
 
@@ -29,6 +28,7 @@
             android:layout_alignParentRight="true"
             android:text="2018-02-09 08:20"
             android:textColor="@color/text_grey_color"
+            android:visibility="gone"
             android:textSize="@dimen/common_small_size"/>
     </RelativeLayout>
     <TextView
@@ -64,7 +64,12 @@
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/un_collected"
-             />
+            />
     </RelativeLayout>
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="@color/line_bg" />-->
 
 </LinearLayout>

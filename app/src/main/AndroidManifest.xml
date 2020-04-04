@@ -32,6 +32,8 @@
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
         <activity android:name=".module.login.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
+        <activity android:name=".module.collect.CollectListActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"/>
     </application>
 
 </manifest>

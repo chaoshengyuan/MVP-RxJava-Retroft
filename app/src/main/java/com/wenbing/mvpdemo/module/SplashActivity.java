@@ -21,7 +21,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 //        StatusBarUtil.setTransparent(this);
-
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary),0);
         Observable
                 .timer(1, TimeUnit.SECONDS)
